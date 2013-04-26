@@ -1,0 +1,13 @@
+'es-AR':
+  home: "Home"
+  contact: "Contacto"
+  news: "Noticias"
+  institutional: "Institucional"
+  products: "Productos"
+  sign_in: "Ingresar"
+  welcome_silb: "Bienvenido a SILB"
+  silb_stand_for: "Soluciones Integralse a Laboratórios Bioquímicos"
+  sign_up_now: "Registrate!!"
+  form_error:
+    one: "El formulario contiene 1 error"
+    other: 'El formulario contiene %{count} errores'
