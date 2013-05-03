@@ -1,0 +1,3 @@
+<p><%= t('dear', name: @user.name) %>,</p>
+
+<p><%= t('welcome_silb') %>, <%= t('to_activate_your_acount_you_need_to_click_the_next_link') %>: <%= link_to t('activate_acount'), edit_user_activation_url(@user.activation_token) %></p>

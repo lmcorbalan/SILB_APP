@@ -1,0 +1,11 @@
+'es-AR':
+  activerecord:
+    models:
+      user: 
+        one: "usuario"
+        other: "usuarios"
+    attributes:
+      user:     
+        password_digest: "Password"
+        name: "Nombre"
+        password_confirmation: "Confirmación"

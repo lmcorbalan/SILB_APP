@@ -1,7 +1,19 @@
 SILBApp::Application.routes.draw do
+
+  get "user_activations/edit"
+
   root to: 'static_pages#home'
 
-  match '/contact', to: 'static_pages#contact' 
+  resources :users,   only: [:new, :create, :edit,  :update]
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :password_resets
+  resources :user_activations, only: [:edit]
+
+  match '/signup',  to: 'users#new'
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
+
+  match '/contact', to: 'static_pages#contact'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

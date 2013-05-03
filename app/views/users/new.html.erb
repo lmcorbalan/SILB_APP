@@ -1,0 +1,11 @@
+<% provide(:title, t('sign_up_now')) %>
+<h1><%= t('sign_up_now') %></h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'fields', f: f %> <!-- llamando al partial _fields.html.erb -->
+      <%= f.submit t('create_my_account'), class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
