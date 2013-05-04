@@ -45,4 +45,12 @@ module SessionsHelper
   def store_location
     session[:return_to] = request.url
   end
+
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
+  end
+
+  def admin_user?
+    current_user.admin?
+  end
 end

@@ -1,11 +1,9 @@
 SILBApp::Application.routes.draw do
 
-  get "user_activations/edit"
-
   root to: 'static_pages#home'
 
-  resources :users,   only: [:new, :create, :edit,  :update]
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :users,            only: [:new, :create, :edit,  :update]
+  resources :sessions,         only: [:new, :create, :destroy]
   resources :password_resets
   resources :user_activations, only: [:edit]
 
@@ -14,6 +12,10 @@ SILBApp::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/contact', to: 'static_pages#contact'
+
+  namespace :admin do
+    get '', to: 'dashboard#index', as: '/'
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
