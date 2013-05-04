@@ -1,6 +1,6 @@
 <% provide(:title, t('settings')) %>
 <% provide(:section, t('settings')) %>
-<script type="text/javascript">
+<% content_for :head do %>
     $(document).ready(function () {
 
         changing_password( $("#change_password").is(':checked') );
@@ -19,7 +19,7 @@
             $("#user_password_confirmation").attr("disabled", "disabled");
         }
     }
-</script>
+<% end %>
 
 <div class="row">
   <div class="span6 offset3">
