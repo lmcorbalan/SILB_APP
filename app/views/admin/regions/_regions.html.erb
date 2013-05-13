@@ -1,0 +1,19 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<% if @regions.any? %>
+    <table class="table table-striped table-condensed" style="table-layout:fixed">
+        <thead>
+            <tr>
+                <th style="width:10%"><%= sortable "id" %></th>
+                <th style="width:65%"><%= sortable "name", t('activerecord.attributes.region.name') %></th>
+                <th style="width:10%"><%= t('activerecord.attributes.region.state') %></th>
+                <th style="width:15%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <%= render @regions %>
+        </tbody>
+    </table>
+    <%= will_paginate @regions, class: 'pagination pagination-centered' %>
+<% end %>

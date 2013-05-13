@@ -1,0 +1,30 @@
+<% provide(:title, t('city')) %>
+<% provide(:section, t('city')) %>
+
+<div class="row">
+  <div class="span6">
+    <%= form_for [:admin, @city] do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :region_id %>
+      <%= collection_select(
+        :region,
+        :region_id,
+        @regions, :id, :name,
+        {
+          :prompt   => false,
+          :selected => lambda{ |region| region.id == @city.region.id }
+        },
+        :class => 'tall') %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= label_tag :activate, nil, :class => 'checkbox' do %>
+        <%= t('activerecord.attributes.region.state') %> <%= check_box_tag :activate, 1, @city.active? %>
+      <% end %>
+    </p>
+      <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

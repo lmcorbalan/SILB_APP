@@ -1,0 +1,19 @@
+<% provide(:title, t('region')) %>
+<% provide(:section, t('region')) %>
+
+<div class="row">
+  <div class="span6">
+    <%= form_for [:admin, @region] do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= label_tag :activate, nil, :class => 'checkbox' do %>
+        <%= t('activerecord.attributes.region.state') %> <%= check_box_tag :activate, 1, @region.active? %>
+      <% end %>
+    </p>
+      <%= f.submit t('update'), class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

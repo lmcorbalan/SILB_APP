@@ -1,0 +1,9 @@
+<tr>
+    <td><%= region.id %></td>
+    <td><%= region.name %></td>
+    <td>
+        <%= hidden_field_tag :hideen_state, region.id, :id => "hidden-state-#{region.id}" %>
+        <%= check_box_tag :state, 1, region.active?,   :id => "state-#{region.id}" %>
+    </td>
+    <td><%= link_to t('edit'), edit_admin_region_path(region) %></td>
+</tr>

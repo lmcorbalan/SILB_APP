@@ -3,28 +3,26 @@
     <div class="container">
       <nav>
         <ul class="nav pull-left">
-          <li><%= link_to t('home'),          root_path %></li>
-          <li><%= link_to t('institutional'), '#' %></li>
-          <li><%= link_to t('products'),      '#' %></li>
-          <li><%= link_to t('contact'),       contact_path %></li>
-          <li><%= link_to t('news'),          '#' %></li>
-          <% if signed_in? %>
-            <li id="fat-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <%= t('account') %> <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to t('profile'), current_user %></li>
-                <li><%= link_to t('settings'), edit_user_path(current_user) %></li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to t('sign_out'), signout_path, method: "delete" %>
-                </li>
-              </ul>
-            </li>
-          <% else %>
-            <li><%= link_to t('sign_in'), signin_path %></li>
-          <% end %>
+          <li><%= link_to t('products'),    '#' %></li>
+          <li><%= link_to t('content'),     '#' %></li>
+          <li><%= link_to t('customers'),   '#' %></li>
+          <li><%= link_to t('users'),       '#' %></li>
+          <li><%= link_to t('reports'),     '#' %></li>
+          <li id="fat-menu" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <%= t('maintenance') %> <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to t('new_region'),         new_admin_region_path %></li>
+              <li><%= link_to t('regions_list'),       admin_regions_path    %></li>
+              <li class="divider"></li>
+              <li><%= link_to t('new_city'),             new_admin_city_path %></li>
+              <li><%= link_to t('cities_list'),          admin_cities_path   %></li>
+              <li class="divider"></li>
+              <li><%= link_to t('new_shipment_type'),    '#' %></li>
+              <li><%= link_to t('shipement_types_list'), '#' %></li>
+            </ul>
+          </li>
         </ul>
       </nav>
     </div>

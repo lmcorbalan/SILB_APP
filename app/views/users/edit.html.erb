@@ -33,7 +33,7 @@
       <%= f.text_field :email %>
 
       <%= label_tag :change_password, nil, :class => 'checkbox' do %>
-        <%= check_box_tag :change_password,1 ,params[:change_password] %><%= "Cambiar contraseña" %>
+        <%= check_box_tag :change_password,1 ,params[:change_password] %><%= t('change_password') %>
       <% end %>
 
       <%= f.label :password %>

@@ -1,0 +1,10 @@
+<tr>
+    <td><%= city.id %></td>
+    <td><%= city.name %></td>
+    <td><%= city.region.name %></td>
+    <td>
+        <%= hidden_field_tag :hideen_state, city.id, :id => "hidden-state-#{city.id}" %>
+        <%= check_box_tag :state, 1, city.active?,   :id => "state-#{city.id}", :disabled => city.region.inactive? %>
+    </td>
+    <td><%= link_to t('edit'), edit_admin_city_path(city) %></td>
+</tr>

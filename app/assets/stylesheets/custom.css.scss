@@ -35,6 +35,10 @@ textarea {
   }
 }
 
+span.gap {
+  border: 0;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -118,7 +122,7 @@ footer {
 
 /* forms */
 
-input, textarea, select, .uneditable-input {
+input, textarea, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   padding: 10px;

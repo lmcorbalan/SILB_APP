@@ -1,0 +1,27 @@
+<% provide(:title, t('cities')) %>
+<% provide(:section, t('cities')) %>
+
+<div class="row">
+  <%= form_tag admin_cities_path, method: 'get', id: "cities_search" do %>
+    <div class="input-append span3">
+      <%= label_tag :region_id, t('region') %>
+      <%= collection_select(
+          nil,
+          :region_id,
+          @regions, :id, :name,
+          {
+            :prompt        => false,
+            :include_blank => ''
+          },
+          :class => 'tall span3')
+      %>
+    </div>
+    <div class="input-append span3">
+      <%= label_tag :search, t(:city) %>
+      <%= text_field_tag :search, params[:search], :class => '' %>
+      <%= submit_tag t('search'), class: 'btn' %>
+    </div>
+  <% end %>
+</div>
+<hr class="bs-docs-separator">
+<div id="cities"><%= render 'cities' %></div>

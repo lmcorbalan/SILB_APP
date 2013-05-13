@@ -2,7 +2,7 @@ SILBApp::Application.routes.draw do
 
   root to: 'static_pages#home'
 
-  resources :users,            only: [:new, :create, :edit,  :update]
+  resources :users,            only: [:new, :create, :edit, :update]
   resources :sessions,         only: [:new, :create, :destroy]
   resources :password_resets
   resources :user_activations, only: [:edit]
@@ -15,6 +15,12 @@ SILBApp::Application.routes.draw do
 
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
+
+    resources :regions,        only: [:index, :new, :create, :edit, :update]
+    resources :region_states,  only: [:update]
+
+    resources :cities,         only: [:index, :new, :create, :edit, :update]
+    resources :city_states,    only: [:update]
   end
 
   # The priority is based upon order of creation:
