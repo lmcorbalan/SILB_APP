@@ -2,11 +2,13 @@
 <% provide(:section, t('regions')) %>
 
 <%= form_tag admin_regions_path, method: 'get', id: "regions_search" do %>
-    <div class="input-append">
-        <%= label_tag :region_id, t('region') %>
-        <%= text_field_tag :search, params[:search], :class => 'span3' %>
-        <%= submit_tag t('search'), class: 'btn' %>
+  <div class="row">
+    <div class="input-append span3">
+      <%= label_tag :region_id, t('activerecord.attributes.region.name') %>
+      <%= text_field_tag :search, params[:search], :class => '' %>
+      <%= submit_tag t('search'), class: 'btn' %>
     </div>
-    </br>
-    <div id="regions"><%= render 'regions' %></div>
+  </div>
+  <hr class="bs-docs-separator">
+  <div id="regions"><%= render 'regions' %></div>
 <% end %>

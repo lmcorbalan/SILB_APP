@@ -18,7 +18,7 @@ class Admin::CityStatesController < Admin::BaseController
     end
 
     respond_to do |format|
-      format.html { redirect_to admin_regions_path }
+      format.html { redirect_to admin_cities_path }
       format.js
     end
   end

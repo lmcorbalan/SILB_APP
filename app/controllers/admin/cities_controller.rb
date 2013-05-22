@@ -17,7 +17,7 @@ class Admin::CitiesController < Admin::BaseController
     if @city.save
       params[:activate] ? @city.activate! : @city.inactivate!
       flash[:success] = t('city_successfully_created')
-      redirect_to admin_path
+      redirect_to admin_citie_path
     else
       render 'new'
     end
@@ -34,7 +34,7 @@ class Admin::CitiesController < Admin::BaseController
     if @city.update_attributes( params[:city] )
       params[:activate] ? @city.activate! : @city.inactivate!
       flash[:success] = t('city_successfully_updated')
-      redirect_to admin_path
+      redirect_to admin_cities_path
     else
       render 'edit'
     end
@@ -46,7 +46,7 @@ class Admin::CitiesController < Admin::BaseController
     end
 
     def sort_column
-        Region.column_names.include?(params[:sort].to_s) ? params[:sort] : "name"
+        Region.column_names.include?(params[:sort].to_s) ? params[:sort] : "id"
     end
 
     def sort_direction

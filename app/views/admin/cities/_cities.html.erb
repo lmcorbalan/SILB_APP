@@ -2,23 +2,23 @@
 <%= hidden_field_tag :sort, params[:sort] %>
 
 <% if @cities.any? %>
-    <table class="table table-striped table-condensed" style="table-layout:fixed">
-        <thead>
-            <tr>
-                <th style="width:10%"><%= sortable "id" %></th>
-                <th style="width:45%"><%= sortable "name", t('activerecord.attributes.city.name') %></th>
-                <th style="width:20%"><%= t('region') %></th>
-                <th style="width:10%"><%= t('activerecord.attributes.city.state') %></th>
-                <th style="width:15%"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <%= render @cities %>
-        </tbody>
-    </table>
-    <%= will_paginate @cities, class: 'pagination pagination-centered' %>
+  <table class="table table-striped table-condensed" style="table-layout:fixed">
+    <thead>
+      <tr>
+        <th style="width:10%"><%= sortable "id" %></th>
+        <th style="width:45%"><%= sortable "name", t('activerecord.attributes.city.name') %></th>
+        <th style="width:20%"><%= t('region') %></th>
+        <th style="width:10%"><%= t('activerecord.attributes.city.state') %></th>
+        <th style="width:15%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @cities %>
+    </tbody>
+  </table>
+  <%= will_paginate @cities, class: 'pagination pagination-centered' %>
 <% else %>
-    <%= content_tag( :div, class: "alert text-center" ) do %>
-      <%= content_tag( :span, t('items_not_found') ) %>
-    <% end %>
+  <%= content_tag( :div, class: "alert text-center" ) do %>
+    <%= content_tag( :span, t('items_not_found') ) %>
+  <% end %>
 <% end %>

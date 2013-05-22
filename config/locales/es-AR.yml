@@ -10,6 +10,12 @@
       city:
         one: "localidad"
         other: "localidades"
+      shipping_method:
+        one: "metodo de envío"
+        other: "metodos de envío"
+      shipping_cost:
+        one: "costo de envío"
+        other: "costos de envío"
     attributes:
       user:
         password_digest: "Password"
@@ -21,6 +27,14 @@
         state: "Estado"
       city:
         name: "Nombre"
+        state: "Estado"
+      shipping_method:
+        name: "Nombre"
+        state: "Estado"
+        shipping_costs: "Costos"
+      shipping_cost:
+        description: "Descripción"
+        price: "Precio"
         state: "Estado"
     state_machines:
         region:
@@ -43,3 +57,6 @@
         one: Mostrando <b>1</b> %{model}
         other: Mostrando en <b>total&nbsp;%{count}</b> %{model}
         zero: No se encontraron %{model}
+  errors:
+    messages:
+      invalid_currency: formato inválido (ej. '100', '5%{decimal}24', or '123%{thousands}456%{decimal}78')

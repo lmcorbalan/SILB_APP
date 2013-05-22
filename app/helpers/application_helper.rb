@@ -19,10 +19,12 @@ module ApplicationHelper
   end
 
   def sortable(colum, title = nil)
+
     title ||= colum.titleize
     direction = colum == sort_column && sort_direction == "asc" ? "desc" : "asc"
     icon = direction == "asc" ? "icon-arrow-up" : "icon-arrow-down"
     span = colum == sort_column ? content_tag(:span, nil ,:class => icon) : ''
+
     link_to (title + span ).html_safe, params.merge(sort: colum, direction: direction, page: nil)
   end
 end

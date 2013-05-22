@@ -16,11 +16,18 @@ SILBApp::Application.routes.draw do
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
 
-    resources :regions,        only: [:index, :new, :create, :edit, :update]
-    resources :region_states,  only: [:update]
+    resources :regions,          only: [:index, :new, :create, :edit, :update]
+    resources :region_states,    only: [:update]
 
-    resources :cities,         only: [:index, :new, :create, :edit, :update]
-    resources :city_states,    only: [:update]
+    resources :cities,           only: [:index, :new, :create, :edit, :update]
+    resources :city_states,      only: [:update]
+
+    resources :shipping_methods,       only: [:index, :new, :create, :edit, :update]
+    resources :shipping_method_states, only: [:update]
+
+    resources :shipping_costs,         only: [:index, :new, :create, :edit, :update]
+    resources :shipping_cost_states,   only: [:update]
+
   end
 
   # The priority is based upon order of creation:

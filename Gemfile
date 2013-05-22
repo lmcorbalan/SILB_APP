@@ -8,6 +8,8 @@ gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'rails-i18n'
 gem 'state_machine'
+gem "money-rails", "~> 0.8.1"
+gem "google_currency", "~> 2.2.0"
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'

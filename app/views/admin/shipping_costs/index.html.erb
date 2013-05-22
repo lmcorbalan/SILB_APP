@@ -1,0 +1,15 @@
+<% provide(:title, t('shipping_costs')) %>
+<% provide(:section, @section) %>
+
+<%= form_tag admin_shipping_costs_path, method: 'get', id: "shipping_costs_search", class: 'form-inline' do %>
+  <%= hidden_field_tag :shipping_method_id, params[:shipping_method_id] %>
+
+  <%= render 'shared/regions_cities_controller', { regions: @regions, prompt: 1 } %>
+
+  <%= submit_tag t('search'), class: "btn" %>
+
+  <hr class="bs-docs-separator">
+  <div id="shipping_costs">
+    <%= render 'shipping_costs' %>
+  </div>
+<% end %>

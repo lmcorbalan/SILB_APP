@@ -1,0 +1,29 @@
+<% provide(:title, t('shipping_cost')) %>
+<% provide(:section, t('shipping_cost')) %>
+
+<div class="row">
+  <div class="span6">
+
+    <%= form_for [:admin, @shipping_cost] do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= hidden_field_tag :shipping_method_id, f.object.shipping_method_id %>
+
+      <%= render 'shared/regions_cities_controller', regions: @regions, labels: true %>
+
+      <%= f.label :description %>
+      <%= f.text_field :description %>
+
+      <%= f.label :price %>
+      <%= f.text_field :price %>
+
+      <%= label_tag :activate, nil, :class => 'checkbox' do %>
+        <%= t('activerecord.attributes.shipping_cost.state') %> <%= check_box_tag :activate, 1, true %>
+      <% end %>
+
+    </p>
+      <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
+    <% end %>
+
+  </div>
+</div>

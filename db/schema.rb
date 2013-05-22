@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130504220350) do
+ActiveRecord::Schema.define(:version => 20130520232548) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -31,6 +31,23 @@ ActiveRecord::Schema.define(:version => 20130504220350) do
   create_table "regions", :force => true do |t|
     t.string   "name"
     t.integer  "country_id"
+    t.string   "state"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "shipping_costs", :force => true do |t|
+    t.text     "description"
+    t.string   "state"
+    t.integer  "shipping_method_id"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.integer  "city_id"
+    t.integer  "price_cents",        :default => 0
+  end
+
+  create_table "shipping_methods", :force => true do |t|
+    t.string   "name"
     t.string   "state"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

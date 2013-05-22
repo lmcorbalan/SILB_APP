@@ -1,0 +1,19 @@
+<tr>
+    <td><%= shipping_method.id %></td>
+    <td><%= shipping_method.name %></td>
+    <td>
+        <%= hidden_field_tag :hideen_state, shipping_method.id, :id => "hidden-state-#{shipping_method.id}" %>
+        <%= check_box_tag :state, 1, shipping_method.active?,   :id => "state-#{shipping_method.id}" %>
+    </td>
+    <td>
+        <%= link_to t('edit'), edit_admin_shipping_method_path(shipping_method) %>
+        |
+        <%= link_to t('new_shipping_cost'),  new_admin_shipping_cost_path(
+            :shipping_method_id => shipping_method.id
+        ) %>
+        |
+        <%= link_to t('shipping_costs_list'), admin_shipping_costs_path(
+            :shipping_method_id => shipping_method.id
+        ) %>
+    </td>
+</tr>

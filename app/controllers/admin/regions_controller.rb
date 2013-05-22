@@ -47,7 +47,7 @@ class Admin::RegionsController < Admin::BaseController
     end
 
     def sort_column
-        Region.column_names.include?(params[:sort].to_s) ? params[:sort] : "name"
+        Region.column_names.include?(params[:sort].to_s) ? params[:sort] : "id"
     end
 
     def sort_direction

@@ -1,0 +1,88 @@
+<% content_for :head do %>
+  var regions = jQuery.parseJSON('<%= raw regions %>');
+
+  var prompt = <% if defined?(prompt) && prompt != false %>
+    <%= prompt %>;
+  <% else %>
+    0;
+  <% end %>
+
+  var selected_city =  <% if defined? selected_city %>
+    jQuery.parseJSON('<%= raw selected_city %>');
+  <% else %>
+    0;
+  <% end %>
+
+  $(document).ready(function () {
+
+    if(prompt){
+
+      $('#region_id').append( $('<option>', {
+        value: '',
+        text:  '<%= t('region') %>'
+      }))
+
+      $('#city_id').attr('disabled', true)
+      $('#city_id').append( $('<option>', {
+        value: '',
+        text:  '<%= t('city') %>'
+      }))
+    }
+
+    regions.forEach( function(region){
+      $('#region_id').append( $('<option>', {
+        value: region.id,
+        text:  region.name
+      }))
+    });
+
+
+    $('#region_id').live('change', function(e){
+      if($(this).val() != ''){
+        $('#city_id').attr('disabled', false)
+        $('#city_id').html('');
+
+        if( prompt ){
+          $('#city_id').append( $('<option>', {
+            value: '',
+            text:  '<%= t('city') %>'
+          }))
+        }
+
+        var self = $(this);
+        var cities = regions.filter( function(region){ return region.id == self.val() } )[0].cities;
+
+        cities.forEach( function(city){
+          $('#city_id').append( $('<option>', {
+            value: city.id,
+            text:  city.name
+          }))
+        });
+      } else {
+        $('#city_id').attr('disabled', true)
+      }
+
+    });
+
+    if(selected_city){
+      $('#region_id').val(selected_city.region.id);
+      $('#region_id').change();
+      $('#city_id').val(selected_city.id);
+    } else {
+      $('#region_id').change();
+    }
+
+
+  })
+
+<% end %>
+
+<% if defined?(labels) && labels != false %>
+  <%= label_tag t('region') %>
+<% end %>
+<%= select(:region, :id, [] ) %>
+
+<% if defined?(labels) && labels != false %>
+  <%= label_tag t('city') %>
+<% end %>
+<%= select( :city, :id, [] ) %>

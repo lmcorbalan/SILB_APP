@@ -1,9 +1,9 @@
 <% provide(:title, t('cities')) %>
 <% provide(:section, t('cities')) %>
 
-<div class="row">
-  <%= form_tag admin_cities_path, method: 'get', id: "cities_search" do %>
-    <div class="input-append span3">
+<%= form_tag admin_cities_path, method: 'get', id: "cities_search" do %>
+  <div class="row">
+    <div class="span3">
       <%= label_tag :region_id, t('region') %>
       <%= collection_select(
           nil,
@@ -17,11 +17,11 @@
       %>
     </div>
     <div class="input-append span3">
-      <%= label_tag :search, t(:city) %>
+      <%= label_tag :search, t('activerecord.attributes.city.name') %>
       <%= text_field_tag :search, params[:search], :class => '' %>
       <%= submit_tag t('search'), class: 'btn' %>
     </div>
-  <% end %>
-</div>
-<hr class="bs-docs-separator">
-<div id="cities"><%= render 'cities' %></div>
+  </div>
+  <hr class="bs-docs-separator">
+  <div id="cities"><%= render 'cities' %></div>
+<% end %>

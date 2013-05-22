@@ -1,0 +1,15 @@
+<tr>
+    <td><%= shipping_cost.id %></td>
+    <td><%= humanized_money_with_symbol shipping_cost.price %></td>
+    <td><%= "#{shipping_cost.city.region.name} | #{shipping_cost.city.name}" %></td>
+    <td>
+        <%= hidden_field_tag :hideen_state, shipping_cost.id, :id => "hidden-state-#{shipping_cost.id}" %>
+        <%= check_box_tag :state,
+            1,
+            shipping_cost.active?,
+            :id => "state-#{shipping_cost.id}",
+            :disabled => shipping_cost.shipping_method.inactive?
+        %>
+    </td>
+    <td><%= link_to t('edit'), edit_admin_shipping_cost_path(shipping_cost) %></td>
+</tr>

@@ -1,0 +1,14 @@
+<% provide(:title, t('shipping_methods')) %>
+<% provide(:section, t('shipping_methods')) %>
+
+<%= form_tag admin_shipping_methods_path, method: 'get', id: "shipping_methods_search" do %>
+  <div class="row">
+    <div class="input-append span3">
+      <%= label_tag :region_id, t('activerecord.attributes.shipping_method.name') %>
+      <%= text_field_tag :search, params[:search], :class => '' %>
+      <%= submit_tag t('search'), class: 'btn' %>
+    </div>
+  </div>
+  <hr class="bs-docs-separator">
+  <div id="shipping_methods"><%= render 'shipping_methods' %></div>
+<% end %>
