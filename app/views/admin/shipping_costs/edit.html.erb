@@ -2,9 +2,8 @@
 <% provide(:section, t('shipping_cost')) %>
 
 <div class="row">
-  <div class="span6">
-
-    <%= form_for [:admin, @shipping_cost] do |f| %>
+  <div class="span12">
+    <%= form_for [:admin, @shipping_cost], :validate => true do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= hidden_field_tag :shipping_method_id, f.object.shipping_method_id %>
@@ -14,10 +13,11 @@
       %>
 
       <%= f.label :description %>
-      <%= f.text_field :description %>
+      <%= f.text_area :description, :rows => 4, class: "span6" %>
 
       <%= f.label :price %>
-      <%= f.text_field :price %>
+      <%= f.text_field :price, class: "span6" %>
+      <%= f.validate :price, :money => true %>
 
       <%= label_tag :activate, nil, :class => 'checkbox' do %>
         <%= t('activerecord.attributes.shipping_cost.state') %>
@@ -27,6 +27,5 @@
     </p>
       <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
     <% end %>
-
   </div>
 </div>

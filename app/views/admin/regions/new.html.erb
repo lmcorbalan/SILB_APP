@@ -2,16 +2,17 @@
 <% provide(:section, t('new_region')) %>
 
 <div class="row">
-  <div class="span6">
-    <%= form_for [:admin, @region] do |f| %>
+  <div class="span12">
+    <%= form_for [:admin, @region], :validate => true do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, :class => "span6" %>
 
       <%= label_tag :activate, nil, :class => 'checkbox' do %>
         <%= t('activerecord.attributes.region.state') %> <%= check_box_tag :activate, 1, true %>
       <% end %>
+
     </p>
       <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
     <% end %>

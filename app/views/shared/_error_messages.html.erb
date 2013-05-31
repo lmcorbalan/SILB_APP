@@ -1,11 +1,13 @@
 <% if object.errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-error">
-      <%= t( 'form_error' , count: object.errors.count) %>.
+      <%= t( 'form_error' , count: object.errors.count) %>
     </div>
-    <ul>
-    <% object.errors.full_messages.each do |msg| %>
-      <li>* <%= msg %></li>
+    <% if defined?(show_list) && show_list != false %>
+      <ul>
+      <% object.errors.full_messages.each do |msg| %>
+        <li>* <%= msg %></li>
+      <% end %>
     <% end %>
     </ul>
   </div>

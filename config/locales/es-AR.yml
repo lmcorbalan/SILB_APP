@@ -42,6 +42,14 @@
             states:
               active: "Activa"
               inactive: "Desactiva"
+    errors:
+      models:
+        shipping_cost:
+          attributes:
+            price:
+              errors:
+                invalid_currency: formato inválido (ej. '100', '5%{decimal}24', or '123%{thousands}456%{decimal}78')
+                not_a_number: no es un número
   will_paginate:
     next_label: siguiente →
     page_gap: ! '&hellip;'
@@ -60,3 +68,10 @@
   errors:
     messages:
       invalid_currency: formato inválido (ej. '100', '5%{decimal}24', or '123%{thousands}456%{decimal}78')
+  number:
+    format:
+      delimiter: ! .
+      precision: 2
+      separator: ','
+      significant: false
+      strip_insignificant_zeros: false

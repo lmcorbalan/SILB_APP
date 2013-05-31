@@ -19,7 +19,14 @@ class ShippingCost < ActiveRecord::Base
 
   validates :description, presence: true
 
-  monetize :price_cents, :allow_nil => false, :numericality => { }
+  monetize :price_cents,
+           :numericality => { :message => {
+             :invalid_currency => I18n.t("errors.messages.invalid_currency",
+                thousands: I18n.t("number.format.delimiter"), decimal: I18n.t("number.format.separator")
+              ),
+             :not_a_number => I18n.t("errors.messages.not_a_number")
+           } },
+           :allow_nil => false
 
   # State Machine
   state_machine :initial => :active do

@@ -2,8 +2,8 @@
 <% provide(:section, t('city')) %>
 
 <div class="row">
-  <div class="span6">
-    <%= form_for [:admin, @city] do |f| %>
+  <div class="span12">
+    <%= form_for [:admin, @city], :validate => true do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= f.label :region_id %>
@@ -14,17 +14,17 @@
         {
           :prompt   => false,
           :selected => lambda{ |region| region.id == @city.region.id }
-        },
-        :class => 'tall') %>
+        }
+      ) %>
 
       <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, class: "span6" %>
 
       <%= label_tag :activate, nil, :class => 'checkbox' do %>
         <%= t('activerecord.attributes.region.state') %> <%= check_box_tag :activate, 1, @city.active? %>
       <% end %>
     </p>
-      <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
+      <%= f.submit t('update'), class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>

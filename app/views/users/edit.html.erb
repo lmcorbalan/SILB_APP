@@ -23,7 +23,7 @@
 
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for(@user) do |f| %>
+    <%= form_for(@user, :validate => true) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= f.label :name %>
@@ -37,10 +37,10 @@
       <% end %>
 
       <%= f.label :password %>
-      <%= f.password_field :password, :disabled => true %>
+      <%= f.password_field :password, :disabled => true, :validate => { :length => true } %>
 
       <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation, :disabled => true %>
+      <%= f.password_field :password_confirmation, :disabled => true, :validate => { :presence => true } %>
 
       <%= f.submit t('save_changes'), class: "btn btn-large btn-primary" %>
     <% end %>

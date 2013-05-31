@@ -146,3 +146,9 @@ input {
   @extend .control-group;
   @extend .error;
 }
+
+.field_with_errors .message {
+  display: inline-block;
+  margin-left: 5px;
+}
+
