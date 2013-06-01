@@ -16,6 +16,8 @@ SILBApp::Application.routes.draw do
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
 
+    resources :users,            only: [:index, :new, :create, :edit, :update, :destroy]
+
     resources :regions,          only: [:index, :new, :create, :edit, :update]
     resources :region_states,    only: [:update]
 

@@ -53,6 +53,24 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.search_admins(params)
+
+    if params
+      binds = {}
+
+      string_where = ['admin = :admin']
+      binds[:admin] = true;
+
+      string_where << '(name LIKE :name OR email LIKE :email)' if params[:search].present?
+      binds[:name ] = "%#{params[:search]}%"
+      binds[:email] = "%#{params[:search]}%"
+
+      where(string_where.join(" AND "), binds)
+    else
+      scoped
+    end
+  end
+
 private
 
     def generate_token(colum)

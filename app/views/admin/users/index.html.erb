@@ -1,0 +1,13 @@
+<% provide(:title, t('users')) %>
+<% provide(:section, t('users')) %>
+
+<%= form_tag admin_users_path, method: 'get', id: "users_search" do %>
+  <div class="row">
+    <div class="input-append span3">
+      <%= text_field_tag :search, params[:search], :class => '' %>
+      <%= submit_tag t('search'), class: 'btn' %>
+    </div>
+  </div>
+  <hr class="bs-docs-separator">
+  <div id="users"><%= render 'users' %></div>
+<% end %>

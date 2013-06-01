@@ -2,7 +2,10 @@
   home: "Home"
   content: "Contenido"
   customers: "Clientes"
+  user: "Usuario"
   users: "Usuarios"
+  new_user: "Nuevo Usuario"
+  users_list: "Listar Usuarios"
   reports: "Reportes"
   maintenance: "Mantenimiento"
   region: "Provincia"
@@ -31,4 +34,8 @@
   shipping_method_successfully_updated: "El metodo de envío se ha actualizado correctamente"
   shipping_cost_successfully_created: "El costo de envío se ha creado correctamente"
   shipping_cost_successfully_updated: "El costo de envío se ha actualizado correctamente"
+  user_successfully_created: "El usuario se ha creado correctamente"
+  user_successfully_updated: "El usuario se ha actualizado correctamente"
+  user_successfully_removed: "El usuario se ha eliminado correctamente"
+  are_you_sure_you_want_to_delete_the_user?: '¿Está seguro que desea eliminar el usuario %{user}?'
 

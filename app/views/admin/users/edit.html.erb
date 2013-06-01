@@ -1,0 +1,50 @@
+<% provide(:title, t('user')) %>
+<% provide(:section, t('user')) %>
+<% content_for :head do %>
+    $(document).ready(function () {
+
+        changing_password( $("#change_password").is(':checked') );
+
+        $("#change_password").change(function () {
+            changing_password(this.checked);
+        })
+    })
+
+    function changing_password (change) {
+        if(change){
+            $("#user_password").removeAttr("disabled");
+            $("#user_password_confirmation").removeAttr("disabled");
+        } else {
+            $("#user_password").attr("disabled", "disabled");
+            $("#user_password_confirmation").attr("disabled", "disabled");
+        }
+    }
+<% end %>
+
+<div class="row">
+  <div class="span12">
+    <%= form_for [:admin, @user], :validate => true do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "span6" %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email, class: "span6" %>
+
+      <%= label_tag :change_password, nil, :class => 'checkbox' do %>
+        <%= check_box_tag :change_password,1 ,params[:change_password] %><%= t('change_password') %>
+      <% end %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, :disabled => true, :validate => { :length => true }, class: "span6" %>
+
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, :disabled => true, :validate => { :presence => true },
+        class: "span6" %>
+      <div>
+        <%= f.submit t('update'), class: "btn btn-large btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
