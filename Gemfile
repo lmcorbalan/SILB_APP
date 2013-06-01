@@ -11,7 +11,6 @@ gem 'rails-i18n'
 gem 'state_machine'
 gem "money-rails", "~> 0.8.1"
 gem "google_currency", "~> 2.2.0"
-# gem "client_side_validations", '3.2.stable'
 gem 'client_side_validations',
   :git => 'git://github.com/bcardarella/client_side_validations.git', :branch => '3-2-stable'
 
