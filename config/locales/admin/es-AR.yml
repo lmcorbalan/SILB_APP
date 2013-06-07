@@ -38,4 +38,10 @@
   user_successfully_updated: "El usuario se ha actualizado correctamente"
   user_successfully_removed: "El usuario se ha eliminado correctamente"
   are_you_sure_you_want_to_delete_the_user?: '¿Está seguro que desea eliminar el usuario %{user}?'
+  admin_roles: 'Roles de Administración'
+  products_admin: 'Administrador de Productos'
+  content_admin: 'Administrador de Contenido'
+  users_admin: 'Administrador de Usuarios'
+  reports_admin: 'Administrador de Reportes'
+  upkeeps_admin: 'Administrador de Mantenimiento'
 

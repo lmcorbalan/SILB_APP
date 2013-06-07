@@ -17,7 +17,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password, :password_confirmation
+  attr_accessible :email, :name, :password, :password_confirmation, :roles
   has_secure_password
 
   before_save { email.downcase! }
@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, :unless => Proc.new { |user| user.password.nil? }
   validates :password_confirmation, presence: true, :unless => Proc.new { |user| user.password.nil? }
+
+  CUSTOMER_ROLE = %w[customer]
+  ADMIN_ROLES = %w[products_admin content_admin users_admin reports_admin upkeeps_admin]
+  ROLES = CUSTOMER_ROLE + ADMIN_ROLES
 
 # Mailers
   def send_password_reset
@@ -54,7 +58,6 @@ class User < ActiveRecord::Base
   end
 
   def self.search_admins(params)
-
     if params
       binds = {}
 
@@ -69,6 +72,24 @@ class User < ActiveRecord::Base
     else
       scoped
     end
+  end
+
+  def roles=(roles)
+    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
+  end
+
+  def roles
+    ROLES.reject do |r|
+      ((roles_mask || 0) & 2**ROLES.index(r)).zero?
+    end
+  end
+
+  def is?(role)
+    roles.include?(role.to_s)
+  end
+
+  def set_customer_role
+    self.roles = CUSTOMER_ROLE
   end
 
 private

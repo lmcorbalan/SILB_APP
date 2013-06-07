@@ -34,8 +34,8 @@ class Admin::UsersController < Admin::BaseController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
-      flash[:success] = t('user_successfully_created')
-      sign_in @user
+      sign_in @user if current_user?(@user)
+      flash[:success] = t('user_successfully_updated')
       redirect_to admin_users_path
     else
       render 'edit'

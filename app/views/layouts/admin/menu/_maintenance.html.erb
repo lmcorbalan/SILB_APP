@@ -1,0 +1,27 @@
+<% #if( can?(:manage, Region) ||
+   #    can?(:manage, City)   ||
+   #    can?(:manage, ShippingMethod) ||
+   #    can?(:manage, ShippingCost))
+%>
+  <li id="fat-menu" class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <%= t('maintenance') %> <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <% #if can?(:manage, Region) %>
+        <li><%= link_to t('new_region'),             new_admin_region_path %></li>
+        <li><%= link_to t('regions_list'),           admin_regions_path    %></li>
+        <li class="divider"></li>
+      <% #end %>
+      <% #if can?(:manage, City) %>
+        <li><%= link_to t('new_city'),               new_admin_city_path %></li>
+        <li><%= link_to t('cities_list'),            admin_cities_path   %></li>
+        <li class="divider"></li>
+      <% #end %>
+      <% #if can?(:manage, ShippingMethod) %>
+        <li><%= link_to t('new_shipping_method'),    new_admin_shipping_method_path %></li>
+        <li><%= link_to t('shipping_methods_list'),  admin_shipping_methods_path %></li>
+      <% #end %>
+    </ul>
+</li>
+<% #end %>

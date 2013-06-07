@@ -1,16 +1,19 @@
 class Admin::RegionsController < Admin::BaseController
+
   helper_method :sort_column, :sort_direction
 
+  before_filter :get_argentinian_regions, :only => :index
+  before_filter :new_argentinian_region, :only => [:new, :create]
+
+  load_and_authorize_resource
+
   def index
-    @regions = get_argentinian_regions
   end
 
   def new
-    @region = new_argentinian_region
   end
 
   def create
-    @region = new_argentinian_region(params[:region])
     if @region.save
       params[:activate] ? @region.activate! : @region.inactivate!
       flash[:success] = t('region_successfully_created')
@@ -36,13 +39,12 @@ class Admin::RegionsController < Admin::BaseController
   end
 
   private
-    def new_argentinian_region(params = {})
-      Country.find_by_name('Argentina').regions.build(params)
+    def new_argentinian_region
+      @region = Country.find_by_name('Argentina').regions.build(params[:region])
     end
 
     def get_argentinian_regions
-      # Country.find_by_name('Argentina').regions.paginate(per_page: 5, page: params[:page])
-      Country.find_by_name('Argentina').regions.search(params[:search]).order(sort_column + " " + sort_direction)
+      @regions = Country.find_by_name('Argentina').regions.search(params[:search]).order(sort_column + " " + sort_direction)
         .paginate(per_page: 10, page: params[:page])
     end
 

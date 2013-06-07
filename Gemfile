@@ -13,6 +13,7 @@ gem "money-rails", "~> 0.8.1"
 gem "google_currency", "~> 2.2.0"
 gem 'client_side_validations',
   :git => 'git://github.com/bcardarella/client_side_validations.git', :branch => '3-2-stable'
+gem "cancan", "~> 1.6.10"
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'

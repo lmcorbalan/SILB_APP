@@ -1,0 +1,10 @@
+<br />
+<hr class="bs-docs-separator">
+<%= label_tag t('admin_roles') %>
+<%= hidden_field_tag "user[roles][]", nil %>
+<% User::ADMIN_ROLES.each do |role| %>
+  <%= label_tag "user[roles][#{role}]", nil, :class => 'checkbox' do %>
+    <%= check_box_tag "user[roles][#{role}]", role, @user.roles.include?(role), {:name => "user[roles][]"}%>
+    <%= t(role) %>
+  <% end %>
+<% end %>

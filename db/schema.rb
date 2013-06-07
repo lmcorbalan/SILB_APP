@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130520232548) do
+ActiveRecord::Schema.define(:version => 20130604013132) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20130520232548) do
     t.datetime "password_reset_sent_at"
     t.string   "state"
     t.string   "activation_token"
+    t.integer  "roles_mask"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

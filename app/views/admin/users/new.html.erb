@@ -1,13 +1,15 @@
 <% provide(:title, t('new_user')) %>
 <% provide(:section, t('new_user')) %>
 
-<div class="row">
-  <div class="span12">
-    <%= form_for [:admin, @user], :validate => true do |f| %>
-      <%= render 'fields', f: f %>
-      <div>
-        <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
-      </div>
-    <% end %>
+<%= form_for [:admin, @user], :validate => true do |f| %>
+  <div class="row">
+    <div class="span12">
+        <%= render 'fields', f: f %>
+
+        <%= render 'checks_admin_roles' %>
+        <div>
+          <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
+        </div>
+    </div>
   </div>
-</div>
+<% end %>
