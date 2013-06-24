@@ -1,0 +1,20 @@
+<% provide(:title, t('new_brand')) %>
+<% provide(:section, t('new_brand')) %>
+
+<div class="row">
+  <div class="span12">
+    <%= form_for [:admin, @brand], :validate => true do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "span6" %>
+
+      <%= label_tag :activate, nil, :class => 'checkbox' do %>
+        <%= t('activerecord.attributes.brand.state') %>
+        <%= check_box_tag :activate, 1, true %>
+      <% end %>
+    </p>
+      <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

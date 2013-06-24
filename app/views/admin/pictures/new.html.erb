@@ -1,0 +1,24 @@
+<% provide(:title, t('new_picture')) %>
+<% provide(:section, t('new_picture')) %>
+
+<div class="row">
+  <div class="span12">
+    <%= form_for [:admin, @picture], :validate => true do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.hidden_field :imageable_id, :name => "imageable_id" %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "span6"%>
+      <br>
+      <%= f.file_field :image, class: "span6" %>
+
+      <br>
+
+      <p><%= f.submit t('save'), class: "btn btn-large btn-primary" %></p>
+
+    <% end %>
+  </div>
+</div>
+<br>
+<p><%= link_to t('cancel'), edit_admin_product_path(@picture.imageable) %></p>

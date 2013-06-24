@@ -1,0 +1,64 @@
+<% provide(:title, t('product')) %>
+<% provide(:section, t('product')) %>
+
+  <div class="row">
+    <div class="span2">
+      <b><%= t('activerecord.attributes.product.code') + ':' %></b>
+    </div>
+    <div class="span10"><%= @product.code %></div>
+  </div>
+  <div class="row">
+    <div class="span2">
+      <b><%= t('activerecord.attributes.product.name')+ ':' %></b>
+    </div>
+    <div class="span10"><%= @product.name %></div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <b><%= t('activerecord.attributes.product.description')+ ':' %></b>
+    </div>
+    <div class="span10"><%= @product.description %></div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <b><%= t('activerecord.attributes.product.category_id')+ ':' %></b>
+    </div>
+    <div class="span10"><%= @product.category.name %></div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <b><%= t('activerecord.attributes.product.brand_id')+ ':' %></b>
+    </div>
+    <div class="span10"><%= @product.brand.name %></div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <b><%= t('activerecord.attributes.product.current_stock')+ ':' %></b>
+    </div>
+    <div class="span10"><%= @product.current_stock %></div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <b><%= t('activerecord.attributes.product.minimum_stock')+ ':' %></b>
+    </div>
+    <div class="span10"><%= @product.minimum_stock %></div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <b><%= t('activerecord.attributes.product.highlight_stock_from')+ ':' %></b>
+    </div>
+    <div class="span10"><%= @product.highlight_stock_from %></div>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <b><%= t('activerecord.attributes.product.state')+ ':' %></b>
+    </div>
+    <div class="span10"><%= t("activerecord.state_machines.product.state.states.#{@product.state}") %></div>
+  </div>

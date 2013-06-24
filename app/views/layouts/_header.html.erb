@@ -3,12 +3,21 @@
     <div class="container">
       <%= link_to "SILB", '#', id: "logo" %>
       <nav>
-        <ul class="nav pull-right">
+        <ul class="nav">
           <li><%= link_to t('home'),          root_path %></li>
           <li><%= link_to t('institutional'), '#' %></li>
-          <li><%= link_to t('products'),      '#' %></li>
+          <li id="fat-menu" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <%= t('products') %> <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <%= nested_menu Category.scoped.arrange(:order => :name) %>
+            </ul>
+          </li>
           <li><%= link_to t('contact'),       contact_path %></li>
           <li><%= link_to t('news'),          '#' %></li>
+        </ul>
+        <ul  class="nav pull-right">
           <% if signed_in? %>
             <li id="fat-menu" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">

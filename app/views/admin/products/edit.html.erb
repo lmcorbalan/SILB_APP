@@ -1,0 +1,17 @@
+<% provide(:title, t('product')) %>
+<% provide(:section, t('product')) %>
+
+<div class="row">
+  <div class="span12">
+    <%= form_for [:admin, @product], :validate => true do |f| %>
+      <%= render 'fields', f: f %>
+    </br>
+      <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
+    <% end %>
+    <h3><%= t('images') %></h3>
+    <hr class="bs-docs-separator">
+
+    <%= render 'picture_uploader', object: @product %>
+
+  </div>
+</div>

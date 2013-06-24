@@ -1,0 +1,14 @@
+<% provide(:title, t('brands')) %>
+<% provide(:section, t('brands')) %>
+
+<%= form_tag admin_brands_path, method: 'get', id: "brands_search" do %>
+  <div class="row">
+    <div class="input-append span3">
+      <%= label_tag :region_id, t('activerecord.attributes.brand.name') %>
+      <%= text_field_tag :search, params[:search], :class => '' %>
+      <%= submit_tag t('search'), class: 'btn' %>
+    </div>
+  </div>
+  <hr class="bs-docs-separator">
+  <div id="brands"><%= render 'brands' %></div>
+<% end %>

@@ -14,6 +14,7 @@
 #  password_reset_sent_at :datetime
 #  state                  :string(255)
 #  activation_token       :string(255)
+#  roles_mask             :integer
 #
 
 require 'spec_helper'

@@ -1,0 +1,15 @@
+<%= form_for [:admin, @category], :validate => true do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :parent_id %>
+  <%= f.collection_select :parent_id, @categories, :id, :name_for_selects, :include_blank => true %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, class: "span6" %>
+
+  <%= label_tag :activate, nil, :class => 'checkbox' do %>
+    <%= t('activerecord.attributes.category.state') %> <%= check_box_tag :activate, 1, true %>
+  <% end %>
+
+  <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
+<% end %>

@@ -1,1 +1,15 @@
-<li><%= link_to t('products'),    '#' %></li>
+<li id="fat-menu" class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <%= t('products') %> <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to t('new_product'),     new_admin_product_path %></li>
+    <li><%= link_to t('products_list'),   admin_products_path %></li>
+    <li class="divider"></li>
+    <li><%= link_to t('new_category'),    new_admin_category_path %></li>
+    <li><%= link_to t('categories_list'), admin_categories_path   %></li>
+    <li class="divider"></li>
+    <li><%= link_to t('new_brand'),       new_admin_brand_path %></li>
+    <li><%= link_to t('brands_list'),     admin_brands_path   %></li>
+  </ul>
+</li>

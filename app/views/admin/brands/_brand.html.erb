@@ -1,0 +1,9 @@
+<tr>
+    <td><%= brand.id %></td>
+    <td><%= brand.name %></td>
+    <td>
+        <%= hidden_field_tag :hideen_state, brand.id, :id => "hidden-state-#{brand.id}" %>
+        <%= check_box_tag :state, 1, brand.active?,   :id => "state-#{brand.id}" %>
+    </td>
+    <td><%= link_to t('edit'), edit_admin_brand_path(brand) %></td>
+</tr>

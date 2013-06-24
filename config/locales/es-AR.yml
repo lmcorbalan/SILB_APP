@@ -16,6 +16,18 @@
       shipping_cost:
         one: "costo de envío"
         other: "costos de envío"
+      category:
+        one: "categoría"
+        other: "categorías"
+      brand:
+        one: "marca"
+        other: "marcas"
+      product:
+        one: "producto"
+        other: "productos"
+      picture:
+        one: "Imagen"
+        other: "Imagenes"
     attributes:
       user:
         password_digest: "Password"
@@ -36,12 +48,38 @@
         description: "Descripción"
         price: "Precio"
         state: "Estado"
+      category:
+        name: "Nombre"
+        parent_id: "Categoria Padre"
+        state: "Estado"
+      brand:
+        name: "Nombre"
+        state: "Estado"
+      product:
+        code: "Código"
+        name: "Nombre"
+        description: "Descripción"
+        category_id: "Categoría"
+        brand_id: "Marca"
+        price_cents: "Precio"
+        current_stock: "Stock Actual"
+        minimum_stock: "Stock Minimo"
+        highlight_stock_from: "Destacar en"
+        state: "Estado"
+      picture:
+        name: "Nombre"
+        image: "Imagen"
     state_machines:
         region:
           state:
             states:
               active: "Activa"
               inactive: "Desactiva"
+        product:
+          state:
+            states:
+              active: "Activo"
+              inactive: "Desactivo"
     errors:
       models:
         shipping_cost:

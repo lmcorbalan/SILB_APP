@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require rails.validations
+//= require jquery-fileupload
 //= require_tree .

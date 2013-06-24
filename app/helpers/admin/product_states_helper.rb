@@ -1,0 +1,2 @@
+module Admin::ProductStatesHelper
+end

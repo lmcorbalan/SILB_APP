@@ -1,0 +1,62 @@
+@mixin li_before_after {
+  content: '';
+  left: -20px;
+  position: absolute;
+  right: auto
+}
+
+$grayDark: #999;
+$grayMediumLight: #eaeaea;
+
+.tree {
+  min-height: 20px;
+  padding: 19px;
+  li {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 5px 0 5px;
+    position: relative;
+    span {
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border: 1px solid $grayDark;
+      border-radius: 5px;
+      display: inline-block;
+      padding: 3px 8px;
+      text-decoration: none;
+      margin-right: 5px;
+      i {
+        margin-right: 5px;
+      }
+    }
+  }
+  li:before {
+    @include li_before_after;
+    border-left: 1px solid $grayDark;
+    bottom: 50px;
+    height: 100%;
+    top: 0;
+    width: 1px
+  }
+  li:after {
+    @include li_before_after;
+    border-top: 1px solid $grayDark;
+    height: 20px;
+    top: 25px;
+    width: 25px
+  }
+  li.parent_li>span {
+    cursor: pointer
+  }
+}
+
+.tree>ul>li:before, .tree>ul>li:after {
+    border: 0
+}
+.tree li:last-child::before {
+    height: 30px
+}
+.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
+    background: $grayMediumLight;
+    color: #000
+}

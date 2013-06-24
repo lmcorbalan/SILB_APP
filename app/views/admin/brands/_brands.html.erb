@@ -1,0 +1,23 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<% if @brands.any? %>
+  <table class="table table-striped table-condensed" style="table-layout:fixed">
+    <thead>
+      <tr>
+        <th style="width:10%"><%= sortable "id" %></th>
+        <th style="width:40%"><%= sortable "name", t('activerecord.attributes.brand.name') %></th>
+        <th style="width:10%"><%= t('activerecord.attributes.brand.state') %></th>
+        <th style="width:40%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @brands %>
+    </tbody>
+  </table>
+  <%= will_paginate @brands, class: 'pagination pagination-centered' %>
+<% else %>
+  <%= content_tag( :div, class: "alert text-center" ) do %>
+    <%= content_tag( :span, t('items_not_found') ) %>
+  <% end %>
+<% end %>

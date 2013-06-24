@@ -1,5 +1,10 @@
 @import "bootstrap";
 
+/* missing style from bootstrap */
+.table tbody tr.warning td {
+  background-color: #fcf8e3;
+}
+
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
@@ -151,5 +156,15 @@ input {
 .field_with_errors .message {
   display: inline-block;
   margin-left: 5px;
+}
+
+/* dropdown submenu hack */
+
+.dropdown-submenu:hover .dropdown-menu {
+  display: none;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
 }
 

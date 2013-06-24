@@ -14,6 +14,9 @@ gem "google_currency", "~> 2.2.0"
 gem 'client_side_validations',
   :git => 'git://github.com/bcardarella/client_side_validations.git', :branch => '3-2-stable'
 gem "cancan", "~> 1.6.10"
+gem "ancestry"
+gem "rmagick"
+gem "carrierwave"
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
@@ -32,6 +35,7 @@ group :assets do
   gem 'sass-rails',   '3.2.5'
   gem 'coffee-rails', '3.2.2'
   gem 'uglifier', '1.2.3'
+  gem 'jquery-fileupload-rails'
 end
 
 group :test do

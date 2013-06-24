@@ -1,0 +1,44 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<% if @products.any? %>
+  <table class="table table-condensed" style="table-layout:fixed">
+    <thead>
+      <tr>
+        <th style="width:5%">
+          <%= sortable "id" %>
+        </th>
+        <th style="width:10%">
+          <%= sortable "code", t('activerecord.attributes.product.code') %>
+        </th>
+        <th style="width:15%">
+          <%= sortable "name", t('activerecord.attributes.product.name') %>
+        </th>
+        <th style="width:15%">
+          <%= sortable "category_id", t('activerecord.attributes.product.category_id') %>
+        </th>
+        <th style="width:15%">
+          <%= sortable "brand_id", t('activerecord.attributes.product.brand_id') %>
+        </th>
+        <th style="width:10%">
+          <%= sortable "current_stock", t('activerecord.attributes.product.current_stock') %>
+        </th>
+        <th style="width:10%">
+          <%= sortable "minimum_stock", t('activerecord.attributes.product.minimum_stock') %>
+        </th>
+        <th style="width:5%">
+          <%= t('activerecord.attributes.product.state') %>
+        </th>
+        <th style="width:15%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @products %>
+    </tbody>
+  </table>
+  <%= will_paginate @products, class: 'pagination pagination-centered' %>
+<% else %>
+  <%= content_tag( :div, class: "alert text-center" ) do %>
+    <%= content_tag( :span, t('items_not_found') ) %>
+  <% end %>
+<% end %>

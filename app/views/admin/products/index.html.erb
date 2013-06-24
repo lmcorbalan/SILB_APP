@@ -1,0 +1,26 @@
+<% provide(:title, t('products')) %>
+<% provide(:section, t('products')) %>
+
+<%= form_tag admin_products_path, method: 'get', id: "products_search" do %>
+  <div class="row">
+    <div class="span6">
+      <%= label_tag :code, t('activerecord.attributes.product.code') %>
+      <%= text_field_tag :code, params[:code], :class => '' %>
+
+      <%= label_tag :name, t('activerecord.attributes.product.name') %>
+      <%= text_field_tag :name, params[:name], :class => '' %>
+
+      <%= label_tag :category_id %>
+      <%= collection_select(nil, :category_id, @categories, :id, :name_for_selects,
+          { :include_blank => true }, :class => '') %>
+
+      <%= label_tag :brand_id %>
+      <%= collection_select(nil, :brand_id, Brand.scoped.order('name'), :id, :name,
+          { :include_blank => true }, :class => '') %>
+      <br><br>
+      <%= submit_tag t('search'), class: 'btn' %>
+    </div>
+  </div>
+  <hr class="bs-docs-separator">
+  <div id="products"><%= render 'products' %></div>
+<% end %>

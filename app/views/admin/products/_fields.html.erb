@@ -1,0 +1,44 @@
+<%= render 'shared/error_messages', object: f.object %>
+
+<%= f.label :code %>
+<%= f.text_field :code, class: "span6" %>
+
+<%= f.label :name %>
+<%= f.text_field :name, class: "span6" %>
+
+<%= f.label :description %>
+<%= f.text_area :description, :rows => 4, class: "span6" %>
+
+<%= f.label :category_id %>
+<%= f.collection_select :category_id,
+  Category.arrange_as_array(:order => 'name'), :id, :name_for_selects,
+  {
+    :disabled => lambda{ |category| category.inactive? || category.has_children? }
+  }
+%>
+
+<%= f.label :brand_id %>
+<%= f.collection_select :brand_id,
+  Brand.scoped.order('name'), :id, :name,
+  {
+    :disabled => lambda{ |brand| brand.inactive? }
+  }
+%>
+
+<%= f.label :price %>
+<%= f.text_field :price, class: "span6" %>
+<%= f.validate :price, :money => true %>
+
+<%= f.label :current_stock %>
+<%= f.text_field :current_stock, class: "span6" %>
+
+<%= f.label :minimum_stock %>
+<%= f.text_field :minimum_stock, class: "span6" %>
+
+<%= f.label :highlight_stock_from %>
+<%= f.text_field :highlight_stock_from, class: "span6" %>
+
+<%= label_tag :activate, nil, :class => 'checkbox' do %>
+  <%= t('activerecord.attributes.product.state') %>
+  <%= check_box_tag :activate, 1, f.object.active? %>
+<% end %>

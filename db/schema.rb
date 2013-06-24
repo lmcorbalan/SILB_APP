@@ -11,7 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130604013132) do
+ActiveRecord::Schema.define(:version => 20130612203323) do
+
+  create_table "brands", :force => true do |t|
+    t.string   "name"
+    t.string   "state"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "state"
+  end
+
+  add_index "categories", ["ancestry"], :name => "index_categories_on_ancestry"
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -27,6 +44,33 @@ ActiveRecord::Schema.define(:version => 20130604013132) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "pictures", :force => true do |t|
+    t.string   "name"
+    t.string   "image"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "products", :force => true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "category_id"
+    t.integer  "brand_id"
+    t.integer  "price_cents"
+    t.integer  "current_stock"
+    t.integer  "minimum_stock"
+    t.integer  "highlight_stock_from"
+    t.string   "state"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "products", ["code"], :name => "index_products_on_code", :unique => true
+  add_index "products", ["name"], :name => "index_products_on_name", :unique => true
 
   create_table "regions", :force => true do |t|
     t.string   "name"

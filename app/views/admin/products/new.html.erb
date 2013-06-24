@@ -1,0 +1,12 @@
+<% provide(:title, t('new_product')) %>
+<% provide(:section, t('new_product')) %>
+
+<div class="row">
+  <div class="span12">
+    <%= form_for [:admin, @product], :validate => true do |f| %>
+      <%= render 'fields', f: f %>
+    </br>
+      <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

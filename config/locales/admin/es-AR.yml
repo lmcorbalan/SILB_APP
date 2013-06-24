@@ -24,6 +24,18 @@
   shipping_costs: "Costos de Envío"
   new_shipping_cost: "Nueva Costo de Envío"
   shipping_costs_list: "Listar Costos de Envío"
+  category: "Categoría"
+  categories: "Categorías"
+  new_category: "Nueva Categoría"
+  categories_list: "Listar Categorías"
+  brand: "Marca"
+  brands: "Marcas"
+  new_brand: "Nueva Marca"
+  brands_list: "Listar Marcas"
+  product: "Producto"
+  new_product: "Nuevo Producto"
+  products_list: "Listar Productos"
+  new_picture: "Nueva Imagen"
   search: "Buscar"
   an_error_occurred_the_action_could_not_be_completed: "Ha ocurrido un error, la acción no pudo concretarse. Por favor intente nuevamente mas tarde."
   region_successfully_created: "La región se ha creado correctamente"
@@ -37,11 +49,25 @@
   user_successfully_created: "El usuario se ha creado correctamente"
   user_successfully_updated: "El usuario se ha actualizado correctamente"
   user_successfully_removed: "El usuario se ha eliminado correctamente"
-  are_you_sure_you_want_to_delete_the_user?: '¿Está seguro que desea eliminar el usuario %{user}?'
+  are_you_sure_you_want_to_delete_the_user?: '¿Está seguro que desea eliminar el usuario: %{user}?'
+  category_successfully_created: "La categoría se ha creado correctamente"
+  category_successfully_updated: "La categoría se ha actualizado correctamente"
+  category_successfully_removed: "La categoría se ha eliminado correctamente"
+  are_you_sure_you_want_to_delete_the_category?: '¿Está seguro que desea eliminar la categoría: %{category}?'
+  product_successfully_created: "El producto se ha creado correctamente"
+  product_successfully_updated: "El producto se ha actualizado correctamente"
+  brand_successfully_created: "La marca se ha creado correctamente"
+  brand_successfully_updated: "La marca se ha actualizado correctamente"
+  picture_successfully_added: "La imagen se ha agregado correctamente"
+  picture_successfully_removed: "La imagen se ha eliminado correctamente"
   admin_roles: 'Roles de Administración'
   products_admin: 'Administrador de Productos'
   content_admin: 'Administrador de Contenido'
   users_admin: 'Administrador de Usuarios'
   reports_admin: 'Administrador de Reportes'
   upkeeps_admin: 'Administrador de Mantenimiento'
+  file_is_too_big: 'El tamaño del archivo es muy grande'
+  file_is_too_small: 'El tamaño del archivo es muy pequeño'
+  filetype_not_allowed: 'Tipo de archivo no permitido'
+  max_number_of_files_exceeded: 'Cantidad maxima de archivos exedida'
 
