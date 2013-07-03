@@ -16,5 +16,10 @@
     </p>
       <%= f.submit t('update'), class: "btn btn-large btn-primary" %>
     <% end %>
+
+    <h3><%= t('images') %></h3>
+    <hr class="bs-docs-separator">
+    <%= render 'shared/picture_upload', object: @brand %>
+
   </div>
 </div>

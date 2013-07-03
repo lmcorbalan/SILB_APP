@@ -80,6 +80,11 @@
             states:
               active: "Activo"
               inactive: "Desactivo"
+        category:
+          state:
+            states:
+              active: "Activa"
+              inactive: "Desactiva"
     errors:
       models:
         shipping_cost:

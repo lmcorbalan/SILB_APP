@@ -8,10 +8,10 @@
     </br>
       <%= f.submit t('save'), class: "btn btn-large btn-primary" %>
     <% end %>
+
     <h3><%= t('images') %></h3>
     <hr class="bs-docs-separator">
-
-    <%= render 'picture_uploader', object: @product %>
+    <%= render 'shared/picture_upload', object: @product %>
 
   </div>
 </div>

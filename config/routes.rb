@@ -13,6 +13,8 @@ SILBApp::Application.routes.draw do
 
   match '/contact', to: 'static_pages#contact'
 
+  resources :products, :as => "catalogs", only: [:index, :show]
+
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
 

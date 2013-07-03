@@ -13,6 +13,7 @@ class Brand < ActiveRecord::Base
   attr_accessible :name
 
   has_many :products
+  has_many :pictures, :as => :imageable
 
   before_save { name.downcase! }
 
@@ -33,6 +34,10 @@ class Brand < ActiveRecord::Base
       transition :inactive => :active
       transition :active   => :active
     end
+  end
+
+  def name
+    read_attribute(:name).try(:titleize)
   end
 
   def self.search(search)

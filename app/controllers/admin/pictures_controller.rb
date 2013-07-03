@@ -1,32 +1,14 @@
 class Admin::PicturesController < Admin::BaseController
+  before_filter :load_imageable, :only => [:index, :create]
 
-  # def new
-  #   @picture = Product.find(params[:imageable_id]).pictures.build
-  # end
-
-  # def create
-  #   @picture = Product.find(params[:imageable_id]).pictures.build(params[:picture])
-  #   if @picture.save
-  #     flash[:notice] = t('picture_successfully_added')
-  #     redirect_to edit_admin_product_path(@picture.imageable)
-  #   else
-  #     render :action => 'new'
-  #   end
-  # end
-
-  # def destroy
-  #   @picture = Picture.find(params[:id])
-  #   @picture.destroy
-  #   flash[:notice] = t('picture_successfully_removed')
-  #   redirect_to edit_admin_product_path(@picture.imageable)
-  # end
   def index
-    @pictures = Picture.all
+    @pictures = @imageable.pictures
+    # @pictures = Picture.where(imageable_id: params[:imageable_id], imageable_type: params[:imageable_type])
     render :json => @pictures.collect { |p| p.to_jq_upload }.to_json
   end
 
   def create
-    @picture = Product.find(params[:imageable_id]).pictures.build(params[:picture])
+    @picture = @imageable.pictures.build(params[:picture])
     if @picture.save
       respond_to do |format|
         format.html {
@@ -48,5 +30,11 @@ class Admin::PicturesController < Admin::BaseController
     @picture.destroy
     render :json => true
   end
+
+  private
+    def load_imageable
+      klass = [Product, Brand].detect { |c| params["#{c.name.underscore}_id"] }
+      @imageable = klass.find(params["#{klass.name.underscore}_id"])
+    end
 
 end

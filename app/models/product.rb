@@ -70,16 +70,21 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def name
+    read_attribute(:name).try(:titleize)
+  end
+
   def self.search(search, order)
-    string_where = []
-    bind         = {}
+    string_or_where = []
+    string_where    = []
+    bind            = {}
 
     if search
 
-      string_where << 'code LIKE :code' if search[:code].present?
+      string_or_where << 'code LIKE :code' if search[:code].present?
       bind[:code] = "%#{search[:code]}%"
 
-      string_where << 'name LIKE :name' if search[:name].present?
+      string_or_where << 'name LIKE :name' if search[:name].present?
       bind[:name] = "%#{search[:name]}%"
 
       string_where << 'brand_id = :brand_id' if search[:brand_id].present?
@@ -109,7 +114,49 @@ class Product < ActiveRecord::Base
         joins_on = :category
     end
 
-    where( string_where.join(" AND "), bind ).joins( joins_on ).order( order_by )
+    str_w = ""
+    str_w = string_or_where.join(" OR ") if !string_or_where.blank?
+    str_w = !str_w.blank? && !string_where.blank? ? [str_w, string_where].join(" AND ") :
+      str_w.blank? ? string_where : str_w
+
+    where( str_w, bind ).joins( joins_on ).order( order_by )
+
+  end
+
+  def self.catalog_search(search)
+    string_or_where = []
+    string_where = ""
+    bind         = {}
+
+    if search
+
+      string_or_where << 'code LIKE :code' if search[:code].present?
+      bind[:code] = "%#{search[:code]}%"
+
+      string_or_where << 'name LIKE :name' if search[:name].present?
+      bind[:name] = "%#{search[:name]}%"
+
+      if search[:category_id].present?
+        category = Category.find(search[:category_id])
+        if category.has_children?
+          string_where = 'category_id IN (:categories_ids)'
+          bind[:categories_ids] = category.subtree_ids
+        else
+          string_where = 'category_id = :category_id'
+          bind[:category_id] = category.id
+        end
+
+      end
+    end
+
+    order_by = 'name ASC'
+
+    str_w = ""
+    str_w = string_or_where.join(" OR ") if !string_or_where.blank?
+    str_w = !str_w.blank? && !string_where.blank? ? [str_w, string_where].join(" AND ") :
+      str_w.blank? ? string_where : str_w
+
+    where( str_w, bind ).order( order_by )
 
   end
 

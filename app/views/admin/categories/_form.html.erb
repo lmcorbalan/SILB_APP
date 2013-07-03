@@ -8,7 +8,7 @@
   <%= f.text_field :name, class: "span6" %>
 
   <%= label_tag :activate, nil, :class => 'checkbox' do %>
-    <%= t('activerecord.attributes.category.state') %> <%= check_box_tag :activate, 1, true %>
+    <%= t('activerecord.attributes.category.state') %> <%= check_box_tag :activate, 1, @category.active? %>
   <% end %>
 
   <%= f.submit t('save'), class: "btn btn-large btn-primary" %>

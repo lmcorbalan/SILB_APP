@@ -11,7 +11,7 @@ class Admin::CategoriesController < Admin::BaseController
   def create
     @category = Category.new(params[:category])
     if @category.save
-      params[:activate] ? @category.activate! : @category.inactivate!
+      params[:activate] ? @category.activate : @category.inactivate
       flash[:success] = t('category_successfully_created')
       redirect_to admin_categories_path
     else
@@ -25,9 +25,9 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def update
-    @category = Categoryfind(params[:category])
+    @category = Category.find(params[:id])
     if @category.update_attributes( params[:category] )
-      params[:activate] ? @category.activate! : @category.inactivate!
+      params[:activate] ? @category.activate : @category.inactivate
       flash[:success] = t('category_successfully_updated')
       redirect_to admin_categories_path
     else

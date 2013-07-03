@@ -6,7 +6,7 @@ module Admin::CategoriesHelper
         content_tag(:li,
           content_tag(:span,
             content_tag(:i,'', :class => category.root? ? "icon-folder-open" : "icon-minus-sign") +
-              category.name,
+              category.name.titleize() + "|" + t("activerecord.state_machines.category.state.states.#{category.state}"),
             :title => t("collapse")
           )  +
           links(category) +
@@ -17,7 +17,7 @@ module Admin::CategoriesHelper
         content_tag(:li,
           content_tag(:span,
             content_tag(:i,'', :class => category.root? ? "icon-folder-open" : "icon-leaf") +
-            category.name
+            category.name.titleize() + "|" + t("activerecord.state_machines.category.state.states.#{category.state}")
           ) + links(category)
         )
       end
@@ -35,7 +35,7 @@ module Admin::CategoriesHelper
 
     def link_to_remove(category)
       link_to( t('remove'), [:admin, category],
-        confirm: t('are_you_sure_you_want_to_delete_the_category?', :category => category.name),
+        confirm: t('are_you_sure_you_want_to_delete_the_category?', :category => category.name.titleize()),
         method: :delete )
     end
 

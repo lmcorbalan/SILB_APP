@@ -4,6 +4,8 @@
   news: "Noticias"
   institutional: "Institucional"
   products: "Productos"
+  catalog: "Catálogo"
+  all: "Todos"
   sign_in: "Ingresar"
   sign_out: "Salir"
   account: "Cuenta"
@@ -49,6 +51,9 @@
   to_activate_your_acount_you_need_to_click_the_next_link: "para activar su cuenta debe hacer clic en el siguiente enlace"
   activate_acount: "Activar cuenta"
   items_not_found: "No se encontraron items"
+  products_not_found: "No se encontraron productos"
+  add_to_cart: "Agregar"
+  name_or_code: "nombre o código"
   form_error:
     one: "El formulario contiene 1 error"
     other: 'El formulario contiene %{count} errores'

@@ -168,3 +168,63 @@ input {
   display: block;
 }
 
+div.thumbnail {
+  div.image-box{
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    img.product{
+      width: 200px;
+      height: 200px;
+    }
+  }
+  .text-box{
+    padding: 10px;
+    color: #333333;
+    position: relative;
+    h3 a {
+      color: #222;
+    }
+  }
+
+  pre {
+    padding: 6px 0 8px 0;
+    line-height: 16px;
+    color: #656565;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 20px;
+    white-space: pre;
+    white-space: pre-wrap;
+    height: 6em;
+    overflow: hidden;
+    background-color: white;
+    border: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .article-footer {
+    padding: 15px 0 15px;
+    border-top: 1px dashed #dddddd;
+    .price-small {
+      font-size: 18px;
+      padding: 5px 0 0 0;
+    }
+  }
+}
+
+div.product {
+  div.thumbnail{
+    border: 0;
+  }
+  .carousel-box {
+    height: 400px;
+    background-color: #F7F7F7;
+    .carousel, .carousel-inner, .item {
+      height: 100%;
+    }
+  }
+}
+
+
+

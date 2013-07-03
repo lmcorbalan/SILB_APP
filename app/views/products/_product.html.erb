@@ -1,0 +1,31 @@
+<li class="span4">
+  <div class="thumbnail">
+    <div class="image-box">
+      <%=
+        content_tag(:a,
+          product.pictures.any? ? image_tag(product.pictures.first.image_url(:catalog), :class => "product") : content_tag(:div, nil, :style => "width:200px;height:200px;background-color:#eeeeee;margin:auto;")
+        )
+      %>
+    </div>
+    <div class="text-box">
+      <div style="height:4em;overflow:hidden">
+        <h3>
+          <%= link_to product.code + ' | '+ product.name, catalog_path(product) %>
+        </h3>
+      </div>
+      <%= content_tag( :pre, product.description, :style => "max-height: 6em;" ) %>
+      <div class="article-footer">
+        <div class="price-small">
+          <i class="icon-tag"> </i> <span class="amount"><%= humanized_money_with_symbol product.price %></span>
+          <div class="pull-right">
+            <%= link_to('#', :class => "btn btn-small btn-success") do %>
+              <%= content_tag(:i, nil, :class => "icon-shopping-cart icon-white" ) %>
+              <%= ' ' + t('add_to_cart')  %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+

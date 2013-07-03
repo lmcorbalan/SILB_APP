@@ -21,11 +21,13 @@ class Category < ActiveRecord::Base
 
   validates :name,
     presence: true,
-    length: { maximum: 50 },
-    uniqueness: { case_sensitive: false }
+    length: { maximum: 50 }
 
   # State Machine
   state_machine :initial => :active do
+
+    after_transition :on => :inactivate, :do => :inactivate_subcategories
+    after_transition :on => :activate, :do => :activate_subcategories
 
     event :inactivate do
       transition :inactive => :inactive
@@ -33,9 +35,17 @@ class Category < ActiveRecord::Base
     end
 
     event :activate do
-      transition :inactive => :active
+      transition :inactive => :active , :if => lambda { |category| category.root? || category.parent.active? }
       transition :active   => :active
     end
+  end
+
+  def inactivate_subcategories
+    children.each { |subcategory| subcategory.inactivate! } if children
+  end
+
+  def activate_subcategories
+    children.each { |subcategory| subcategory.activate! } if children
   end
 
   def self.arrange_as_array(options={}, hash=nil)
@@ -49,6 +59,10 @@ class Category < ActiveRecord::Base
     arr
   end
 
+  def name
+    read_attribute(:name).try(:titleize)
+  end
+
   def name_for_selects
     "#{'-' * depth} #{name}"
   end
@@ -56,6 +70,10 @@ class Category < ActiveRecord::Base
   def possible_parents
     parents = Category.arrange_as_array(:order => 'name')
     return new_record? ? parents : parents - subtree
+  end
+
+  def self.actives
+    where('state = ?', "active")
   end
 
 end

@@ -1,0 +1,12 @@
+<% if @products.any? %>
+  <div id="catalog">
+    <ul class='thumbnails'>
+      <%= render @products %>
+    </ul>
+</div>
+  <%= will_paginate @products, class: 'pagination pagination-centered' %>
+<% else %>
+  <%= content_tag( :div, class: "alert text-center" ) do %>
+    <%= content_tag( :span, t('products_not_found') ) %>
+  <% end %>
+<% end %>

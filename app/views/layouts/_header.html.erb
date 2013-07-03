@@ -11,7 +11,8 @@
               <%= t('products') %> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <%= nested_menu Category.scoped.arrange(:order => :name) %>
+              <li><%= link_to t('all'), catalogs_path %></li>
+              <%= nested_menu Category.actives.arrange(:order => :name) %>
             </ul>
           </li>
           <li><%= link_to t('contact'),       contact_path %></li>

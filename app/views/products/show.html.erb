@@ -1,0 +1,33 @@
+<% provide(:title, t('products')) %>
+<div class="page-header">
+  <h1 class="text-left"><%= @product.name %></h1>
+</div>
+<div class="row product">
+  <div class="thumbnail span10 offset1">
+    <div class="carousel-box">
+      <%= product_carousel(@product) %>
+    </div>
+    <div class="text-box">
+      <div>
+        <h3>
+          <%= @product.name %>
+        </h3>
+      </div>
+      <%= content_tag( :p, t('activerecord.attributes.product.code') + ': ' + @product.code ) %>
+      <%= content_tag( :p, t('brand') + ': ' + @product.brand.name ) %>
+      <%= content_tag( :p, t('category') + ': ' + @product.category.name ) %>
+      <%= content_tag( :pre, @product.description ) %>
+      <div class="article-footer">
+        <div class="price-small">
+          <i class="icon-tag"> </i> <span class="amount"><%= humanized_money_with_symbol @product.price %></span>
+          <div class="pull-right">
+            <%= link_to('#', :class => "btn btn-success") do %>
+              <%= content_tag(:i, nil, :class => "icon-shopping-cart icon-white" ) %>
+              <%= ' ' + t('add_to_cart')  %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
