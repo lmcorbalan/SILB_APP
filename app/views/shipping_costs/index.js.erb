@@ -1,0 +1,20 @@
+$('#shipping_costs_summary_container').html('');
+
+$('#shipping_costs_ops_container').html("<%= escape_javascript(shipping_costs_options(@shipping_costs)) %>");
+
+var shipping_costs = jQuery.parseJSON('<%= raw @shipping_costs_js %>');
+var radios = $('input[name="shipping_address[shipping_cost_id]"]:radio')
+
+radios.each( function(i) {
+  $(radios[i]).live('click',function(e) {
+    var selected_val = $(this).val();
+    var shipping_cost = shipping_costs.filter( function(sc){ return sc.id == selected_val } )[0];
+
+    $('#shipping_costs_summary_container').html(
+      tmpl( 'template-shipping-cost', {shipping_cost: shipping_cost} )
+    );
+
+    $('#cost_error_mssg').remove();
+  })
+});
+

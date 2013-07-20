@@ -66,4 +66,14 @@ SILBApp::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   config.action_mailer.default_url_options = { :host => "calm-cliffs-1796.herokuapp.com" }
+
+  config.after_initialize do
+    ActiveMerchant::Billing::Base.mode = :production
+    paypal_options = {
+      :login     => ENV['EXPRESS_GATEWAY_LOGIN'],
+      :password  => ENV['EXPRESS_GATEWAY_PASSWD'],
+      :signature => ENV['EXPRESS_GATEWAY_SIGNATURE']
+    }
+    ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(paypal_options)
+  end
 end

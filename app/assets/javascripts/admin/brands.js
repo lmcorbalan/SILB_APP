@@ -13,7 +13,7 @@ $(function () {
     $('#brands td input[type=checkbox]').live("click", function () {
         var id = $('#hidden-'+this.id).attr('value');
         var url = '/admin/brand_states/'+id+'.js';
-        console.log(this.checked)
+
         $.ajax({
             type: "PUT",
             url: url,

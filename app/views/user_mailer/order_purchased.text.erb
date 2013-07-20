@@ -1,0 +1,38 @@
+<%= t('dear', name: @user.name) %>,
+
+<%= t('user_mailer.order_purchased.body') %>
+
+
+<%= t('billing') %>:
+    <%= t('billing_name') + ':' %><%= h(@order.payment.last_name) + ', ' %><%= h(@order.payment.first_name) %>
+
+<%= t('shipping') %>
+    <%= t('activerecord.attributes.shipping_address.reference_name') + ':' %><%= h(@order.shipping_address.reference_name) %>
+
+    <%= t('activerecord.attributes.shipping_address.reference_last_name') + ':' %><%= h(@order.shipping_address.reference_last_name) %>
+
+    <%= t('activerecord.attributes.shipping_address.company_name') + ':' %><%= h(@order.shipping_address.company_name) %>
+
+    <%= t('activerecord.attributes.shipping_address.reference_phone') + ':' %><%= h(@order.shipping_address.reference_phone) %>
+
+    <%= t('region') + ':' %><%= h(@order.shipping_cost.city.region.name) %>
+
+    <%= t('city') + ':' %><%= h(@order.shipping_cost.city.name) %>
+
+    <%= t('activerecord.attributes.shipping_address.zip_code') + ':' %><%= h(@order.shipping_address.zip_code) %>
+
+    <%= t('activerecord.attributes.shipping_address.shipping_address_1') + ':' %><%= h(@order.shipping_address.shipping_address_1) %>
+
+    <%= t('activerecord.attributes.shipping_address.shipping_address_2') + ':' %><%= h(@order.shipping_address.shipping_address_2) %>
+
+<%= t('order_detail') %>
+    <% @order.items.each do |item| %>
+      <%= h(item.quantity.to_s) + ' - ' + h(item.product.code) + ' | ' + h(item.product.name)  %><%= humanized_money_with_symbol(item.amount) %>
+    <% end %>
+    <%= t('shipping_cost')  %><%= humanized_money_with_symbol(@order.shipping_cost.price) %>
+
+<%= t('total') %>
+  <%= t('ar_total')  %><%= humanized_money_with_symbol(@order.total) %>
+  <%= t('usd_total')  %><%= humanized_money_with_symbol(@order.payment.usd_amount) %>
+
+<%= t('user_mailer.order_purchased.footer') %>

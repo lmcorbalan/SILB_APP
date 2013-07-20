@@ -9,8 +9,9 @@ namespace :db do
     # make_countries_ragions_cities
     # categories = categories_h
     # make_categories(categories)
-    make_brands
-    make_products
+    # make_brands
+    # make_products
+    make_shipping_methods_costs
   end
 end
 
@@ -51,24 +52,24 @@ def make_categories(categries, parent = nil)
   }
 end
 
-def make_brands
-  brands = {
-    "Bd"            => "#{Rails.root}/public/seed_data/brands_images/bd.png",
-    "Biocientifica" => "#{Rails.root}/public/seed_data/brands_images/biocientifica.png",
-    "cobas"         => "#{Rails.root}/public/seed_data/brands_images/cobas.png",
-    "Diestro"       => "#{Rails.root}/public/seed_data/brands_images/diestro.png",
-    "Oxoid"         => "#{Rails.root}/public/seed_data/brands_images/oxoid.png",
-    "Remel"         => "#{Rails.root}/public/seed_data/brands_images/remel.png",
-    "Roche"         => "#{Rails.root}/public/seed_data/brands_images/roche.png",
-    "Sysmex"        => "#{Rails.root}/public/seed_data/brands_images/sysmex.png",
-    "Tecnon"        => "#{Rails.root}/public/seed_data/brands_images/tecnon.png",
-  }
+def make_shipping_methods_costs
+  require 'populator'
 
-  brands.each { |name, picture_path|
-    brand = Brand.create!(name: name.dup)
-    brand.pictures.build( image: File.open(picture_path) )
-    brand.save!
-  }
+  ['SILB', 'Correo Argentino', 'OCA Express', 'Andreani'].each {|name| ShippingMethod.create!(name: name) }
+
+  City.all.each do |city|
+    ShippingMethod.all.each do |shipping_method|
+      ShippingCost.populate 1 do |cost|
+        cost.description  = Populator.sentences(2..10)
+        cost.state        = 'active'
+        cost.shipping_method_id = shipping_method.id
+        cost.created_at         = Time.now
+        cost.city_id = city.id
+        cost.price_cents = [100, 200, 300, 400, 500, 1000, 2000]
+      end
+    end
+  end
+
 end
 
 def make_products
@@ -102,6 +103,26 @@ def make_products
   Product.all.each { |product|
     product.pictures.build( image: image )
     product.save!
+  }
+end
+
+def make_brands
+  brands = {
+    "Bd"            => "#{Rails.root}/public/seed_data/brands_images/bd.png",
+    "Biocientifica" => "#{Rails.root}/public/seed_data/brands_images/biocientifica.png",
+    "cobas"         => "#{Rails.root}/public/seed_data/brands_images/cobas.png",
+    "Diestro"       => "#{Rails.root}/public/seed_data/brands_images/diestro.png",
+    "Oxoid"         => "#{Rails.root}/public/seed_data/brands_images/oxoid.png",
+    "Remel"         => "#{Rails.root}/public/seed_data/brands_images/remel.png",
+    "Roche"         => "#{Rails.root}/public/seed_data/brands_images/roche.png",
+    "Sysmex"        => "#{Rails.root}/public/seed_data/brands_images/sysmex.png",
+    "Tecnon"        => "#{Rails.root}/public/seed_data/brands_images/tecnon.png",
+  }
+
+  brands.each { |name, picture_path|
+    brand = Brand.create!(name: name.dup)
+    brand.pictures.build( image: File.open(picture_path) )
+    brand.save!
   }
 end
 

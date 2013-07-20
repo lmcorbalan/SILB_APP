@@ -13,7 +13,21 @@ SILBApp::Application.routes.draw do
 
   match '/contact', to: 'static_pages#contact'
 
-  resources :products, :as => "catalogs", only: [:index, :show]
+  resources :products, only: [:index, :show]
+  match '/catalog', to: 'products#index'
+
+  resources :orders, only: [:index]
+  match '/shopping_cart', to: 'orders#show'
+  resources :line_items,  only: [:create, :destroy, :update]
+
+  resources :shipping_addresses,  only: [:new, :create]
+  match '/checkout', to: 'shipping_addresses#new'
+
+  resources :shipping_costs,  only: [:index]
+
+  resources :order_payments, only: [:new, :create]
+  match '/express',       to: 'order_payments#express'
+  match '/paypal_cancel', to: 'order_payments#paypal_cancel'
 
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'

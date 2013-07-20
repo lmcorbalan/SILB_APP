@@ -1,0 +1,18 @@
+<% if order.purchased? %>
+  <li class="media">
+    <div class="media-body">
+      <%= link_to t('detail'), '#' , :class => 'pull-right' %>
+      <h4 class="media-heading"><%= "#{t('activerecord.attributes.order.id')} - #{order.id}" %></h4>
+      <dl class="dl-horizontal">
+        <dt style="text-align:left;"><%= t('activerecord.attributes.order.purchased_at') + ':' %></dt>
+        <dd><%= l(order.purchased_at, format: :short) %></dd>
+
+        <dt style="text-align:left;"><%= t('activerecord.attributes.order.state') + ':' %></dt>
+        <dd><%= t("activerecord.state_machines.order.state.states.#{order.state}") %></dd>
+
+        <dt style="text-align:left;"><%= t('activerecord.attributes.order.updated_at') + ':' %></dt>
+        <dd><%= l(order.updated_at, format: :short) %></dd>
+      </dl>
+    </div>
+  </li>
+<% end %>

@@ -1,0 +1,175 @@
+<% provide(:title, t('shipping_information')) %>
+<% provide(:section, t('shipping_information')) %>
+
+<div class="row">
+  <div class="span9 offset2">
+    <%= form_for @shipping_address, :validate => true do |f| %>
+      <div class="row">
+        <div class="span4">
+            <%= render 'shared/error_messages', object: f.object %>
+
+            <%= f.hidden_field :order_id %>
+
+            <%= f.label :company_name %>
+            <%= f.text_field :company_name %>
+
+            <%= f.label :reference_last_name %>
+            <%= f.text_field :reference_last_name %>
+
+            <%= f.label :reference_name %>
+            <%= f.text_field :reference_name %>
+
+            <%= f.label :reference_phone %>
+            <%= f.text_field :reference_phone %>
+
+            <%= label_tag t('region') %>
+            <%= select(:region, :id, [] ) %>
+
+            <%= label_tag t('city') %>
+            <%= select( :city, :id, [] ) %>
+
+            <%= f.label :zip_code %>
+            <%= f.text_field :zip_code %>
+
+            <%= f.label :shipping_address_1 %>
+            <%= f.text_field :shipping_address_1 %>
+
+            <%= f.label :shipping_address_2 %>
+            <%= f.text_field :shipping_address_2 %>
+
+        </div>
+        <div class="span5">
+          <div class="row">
+            <p class='text-center' id="shipping_cost_title" ><strong><%= t('shipping_cost') %></strong></p>
+          </div>
+          <div class="row">
+            <div class="span5" id="shipping_costs_ops_container"></div>
+          </div>
+          <div class="row">
+            <div class="span5" id="shipping_costs_summary_container"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3">
+          <br>
+          <%= link_to t('cancel'), shopping_cart_path, class: "btn btn-danger" %>
+        </div>
+        <div class="span6">
+          <%= image_submit_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif", :class => 'paypal-button pull-right') %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var regions = jQuery.parseJSON('<%= raw @regions %>');
+
+  $(document).ready(function () {
+
+    Object.keys(regions).forEach( function(k){
+      $('#region_id').append( $('<option>', {
+        value: k,
+        text:  regions[k].name
+      }))
+    });
+
+    $('#region_id').live('change', function(e){
+      if($(this).val() != ''){
+        $('#city_id').attr('disabled', false)
+        $('#city_id').html('');
+
+        $('#city_id').append( $('<option>', {
+          value: '',
+          text:  ''
+        }))
+
+        var val = $(this).val();
+        var cities = regions[val].cities;
+
+        Object.keys(cities).forEach( function(k){
+          $('#city_id').append( $('<option>', {
+            value: k,
+            text:  cities[k]
+          }))
+        });
+      } else {
+        $('#city_id').attr('disabled', true)
+      }
+    });
+
+    $('#region_id').change();
+
+    $('#city_id').live('change', function(e){
+      validate_city()
+
+      var id = $(this).val();
+      var url = '/shipping_costs.js';
+
+
+      $.ajax({
+        type: "GET",
+        url: url,
+        data: {'id': id },
+        dataType: "script"
+      });
+
+    });
+
+    $('#new_shipping_address').submit(function () {
+      var valid = false;
+      valid = validate_city();
+      valid = validate_shipping_cost();
+
+      return valid;
+    });
+
+  });
+
+  function validate_city () {
+    if ( $('#city_id').val() == '' ) {
+      var error = $('#city_error_mssg')[0]
+
+      if ( !error ) {
+        $('#city_id').after('<div class="field_with_errors" id="city_error_mssg"><label for="shipping_address_city_id" class="message"><%= t('errors.messages.blank') %></label></div>');
+      }
+      return false;
+    } else {
+      $('#city_error_mssg').remove();
+    };
+
+    return true;
+  };
+
+  function validate_shipping_cost () {
+    var radios = $('input[name="shipping_address[shipping_cost_id]"]:radio');
+    var selected_radio = $('input[name="shipping_address[shipping_cost_id]"]:radio:checked')[0];
+
+    if ( radios.length == 0 ) {
+      return false;
+    }
+
+    if( !selected_radio ) {
+      var error = $('#cost_error_mssg')[0]
+
+       if (!error) {
+        $('#shipping_costs_ops_container').append('<div class="field_with_errors" id="cost_error_mssg"><label for="shipping_cost_id" class="message"><%= t('errors.messages.must_select_one') %></label></div>');
+      }
+      return false;
+    } else {
+      $('#cost_error_mssg').remove();
+    }
+
+    return true;
+  }
+</script>
+
+<script id="template-shipping-cost" type="text/x-tmpl">
+  <dl class="dl-horizontal">
+    <dt style="text-align:left;">{%= '<%= t('activerecord.attributes.shipping_cost.price') + ':' %>' %}</dt>
+    <dd>{%= o.shipping_cost.price %}</dd>
+    <dt style="text-align:left;">{%= '<%= t('activerecord.attributes.shipping_cost.description')+ ':' %>' %}</dt>
+    <dd>{%= o.shipping_cost.description %}</dd>
+  </dl>
+</script>

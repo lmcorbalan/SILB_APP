@@ -28,6 +28,15 @@
       picture:
         one: "Imagen"
         other: "Imagenes"
+      order:
+        one: "Pedido"
+        other: "Pedidos"
+      line_item:
+        one: "Item"
+        other: "Items"
+      shipping_address:
+        one: "Dirección de envío"
+        other: "Direcciones de envío"
     attributes:
       user:
         password_digest: "Password"
@@ -69,6 +78,23 @@
       picture:
         name: "Nombre"
         image: "Imagen"
+      order:
+        id: "Codigo de pedido"
+        user_id: "Usuario"
+        state: "Estado"
+        purchased_at: "Comprada el"
+        updated_at: "Actualizada el"
+      line_item:
+        quantity: "Cantidad"
+        unit_price_cents: "Precio Unitario"
+      shipping_address:
+        reference_name: "Nombre de referencia"
+        reference_last_name: "Apellido de referencia"
+        company_name: "Nombre de compañia"
+        reference_phone: "Teléfono de referencia"
+        zip_code: "Código postal"
+        shipping_address_1: "Dirección de envío 1"
+        shipping_address_2: "Dirección de envío 2"
     state_machines:
         region:
           state:
@@ -85,6 +111,14 @@
             states:
               active: "Activa"
               inactive: "Desactiva"
+        order:
+          state:
+            states:
+              checkout_pending: "Pendiente de Comprar"
+              successful_purchase: "Comprado Exitosamente"
+              unsuccessful_purchase: "Error en la compra"
+              dispatched: "Despachado"
+              dispatched: "Entregado"
     errors:
       models:
         shipping_cost:
@@ -111,6 +145,7 @@
   errors:
     messages:
       invalid_currency: formato inválido (ej. '100', '5%{decimal}24', or '123%{thousands}456%{decimal}78')
+      must_select_one: debe seleccionar uno
   number:
     format:
       delimiter: ! .
@@ -118,3 +153,14 @@
       separator: ','
       significant: false
       strip_insignificant_zeros: false
+  user_mailer:
+    order_purchased:
+      subject: SILB - Pedido %{id}
+      body: 'Gracias por realizar la compra con nosotros. Nos gustaría hacerle saber que SILB ha recibido su pedido, y se está preparandolo para el envío.'
+      footer: 'Atte. SILB'
+    admin_order_purchased:
+      subject: Venta EXITOSA - Orden %{id}
+      body: 'Se ha realizado una venta exitosamente.'
+    admin_order_purchased_error:
+      subject: Venta CON ERROR - Orden %{id}
+      body: 'Ocurrio un error al intentar realizar una venta.'

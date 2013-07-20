@@ -1,0 +1,64 @@
+<p><%= t('dear', name: @user.name) %>,</p>
+
+<p><%= t('user_mailer.order_purchased.body') %></p>
+
+ <div class="row">
+  <p><strong><%= t('billing') %></strong></p>
+  <dl class="dl-horizontal">
+    <dt style="text-align:left;"><%= t('billing_name') + ':' %></dt>
+    <dd><%= h(@order.payment.last_name) + ', ' %><%= h(@order.payment.first_name) %></dd>
+  </dl>
+</div>
+<div class="row">
+  <p><strong><%= t('shipping') %></strong></p>
+  <dl class="dl-horizontal">
+    <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.reference_name') + ':' %></dt>
+    <dd><%= h(@order.shipping_address.reference_name) %></dd>
+
+    <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.reference_last_name') + ':' %></dt>
+    <dd><%= h(@order.shipping_address.reference_last_name) %></dd>
+
+    <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.company_name') + ':' %></dt>
+    <dd><%= h(@order.shipping_address.company_name) %></dd>
+
+    <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.reference_phone') + ':' %></dt>
+    <dd><%= h(@order.shipping_address.reference_phone) %></dd>
+
+    <dt style="text-align:left;"><%= t('region') + ':' %></dt>
+    <dd><%= h(@order.shipping_cost.city.region.name) %></dd>
+
+    <dt style="text-align:left;"><%= t('city') + ':' %></dt>
+    <dd><%= h(@order.shipping_cost.city.name) %></dd>
+
+    <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.zip_code') + ':' %></dt>
+    <dd><%= h(@order.shipping_address.zip_code) %></dd>
+
+    <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.shipping_address_1') + ':' %></dt>
+    <dd><%= h(@order.shipping_address.shipping_address_1) %></dd>
+
+    <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.shipping_address_2') + ':' %></dt>
+    <dd><%= h(@order.shipping_address.shipping_address_2) %></dd>
+  </dl>
+</div>
+<div class="row">
+  <p><strong><%= t('order_detail') %></strong></p>
+  <dl class="dl-horizontal">
+    <% @order.items.each do |item| %>
+      <dt style="text-align:left;"><%= h(item.quantity.to_s) + ' - ' + h(item.product.code) + ' | ' + h(item.product.name)  %></dt>
+      <dd><%= humanized_money_with_symbol(item.amount) %></dd>
+    <% end %>
+    <dt style="text-align:left;"><%= t('shipping_cost')  %></dt>
+    <dd><%= humanized_money_with_symbol(@order.shipping_cost.price) %></dd>
+  </dl>
+</div>
+<div class="row">
+  <p><strong><%= t('total') %></strong></p>
+  <dl class="dl-horizontal">
+    <dt style="text-align:left;"><%= t('ar_total')  %></dt>
+    <dd><%= humanized_money_with_symbol(@order.total) %></dd>
+    <dt style="text-align:left;"><%= t('usd_total')  %></dt>
+    <dd><%= humanized_money_with_symbol(@order.payment.usd_amount) %></dd>
+  </dl>
+</div>
+
+<p><%= t('user_mailer.order_purchased.footer') %></p>

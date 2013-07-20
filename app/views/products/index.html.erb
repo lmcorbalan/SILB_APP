@@ -1,6 +1,7 @@
 <% provide(:title, t('catalog')) %>
+<% provide(:section, t('our_products')) %>
 
-<%= form_tag catalogs_path, method: 'get', id: "catalog_search" do %>
+<%= form_tag catalog_path, method: 'get', id: "catalog_search" do %>
   <div class="row">
       <div class="input-append span4 offset7">
         <%= hidden_field_tag(:category, params[:category]) if params[:category] %>

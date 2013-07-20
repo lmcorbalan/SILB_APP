@@ -78,4 +78,17 @@ class ShippingCost < ActiveRecord::Base
       scoped
     end
   end
+
+  def usd_amount
+    price.exchange_to("USD")
+  end
+
+  include MoneyRails::ActionViewExtension
+  def to_js
+    {
+      "id"          => id,
+      "description" => description,
+      "price"       => humanized_money_with_symbol(self.price)
+    }
+  end
 end

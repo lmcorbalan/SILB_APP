@@ -1,0 +1,8 @@
+$('#header-cart-box').html("<%= escape_javascript(
+    link_to( t('shopping_cart_summary', count: @shopping_cart.items.count) + ' - ' +
+      humanized_money_with_symbol(@shopping_cart.sub_total), shopping_cart_path )
+    ) %>");
+
+$('#cart-sub-total').html("<%= escape_javascript(
+  content_tag( :p, t('sub_total') + ': ' + humanized_money_with_symbol(@shopping_cart.sub_total) )
+) %>");

@@ -17,6 +17,7 @@ gem "cancan", "~> 1.6.10"
 gem "ancestry"
 gem "rmagick"
 gem "carrierwave"
+gem "activemerchant"
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'

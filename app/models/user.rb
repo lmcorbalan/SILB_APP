@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation, :roles
   has_secure_password
 
+  has_many :orders
+
   before_save { email.downcase! }
   before_save { generate_token(:remember_token) }
 
@@ -33,7 +35,7 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true, :unless => Proc.new { |user| user.password.nil? }
 
   CUSTOMER_ROLE = %w[customer]
-  ADMIN_ROLES = %w[products_admin content_admin users_admin reports_admin upkeeps_admin]
+  ADMIN_ROLES = %w[products_admin content_admin users_admin reports_admin upkeeps_admin orders_admin]
   ROLES = CUSTOMER_ROLE + ADMIN_ROLES
 
 # Mailers
@@ -93,11 +95,20 @@ class User < ActiveRecord::Base
     self.roles = CUSTOMER_ROLE
   end
 
+  def get_shopping_cart
+    cart = shopping_cart
+    cart.nil? ? orders.create : cart
+  end
+
 private
 
     def generate_token(colum)
       begin
         self[colum] = SecureRandom.urlsafe_base64
       end while User.exists?(colum => self[colum])
+    end
+
+    def shopping_cart
+      orders.where(state: 'checkout_pending').first
     end
 end

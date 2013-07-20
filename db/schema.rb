@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130612203323) do
+ActiveRecord::Schema.define(:version => 20130717204649) do
 
   create_table "brands", :force => true do |t|
     t.string   "name"
@@ -43,6 +43,46 @@ ActiveRecord::Schema.define(:version => 20130612203323) do
     t.string   "state"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "line_items", :force => true do |t|
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.integer  "unit_price_cents"
+    t.integer  "quantity"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "order_payments", :force => true do |t|
+    t.integer  "order_id"
+    t.string   "ip_address"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "express_token"
+    t.string   "express_payer_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "orders", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "state"
+    t.datetime "purchased_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "payment_transactions", :force => true do |t|
+    t.integer  "order_payment_id"
+    t.string   "action"
+    t.integer  "amount"
+    t.boolean  "success"
+    t.string   "authorization"
+    t.string   "message"
+    t.text     "params"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "pictures", :force => true do |t|
@@ -78,6 +118,20 @@ ActiveRecord::Schema.define(:version => 20130612203323) do
     t.string   "state"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "shipping_addresses", :force => true do |t|
+    t.integer  "order_id"
+    t.string   "reference_name"
+    t.string   "reference_last_name"
+    t.string   "company_name"
+    t.string   "reference_phone"
+    t.integer  "shipping_cost_id"
+    t.string   "zip_code"
+    t.string   "shipping_address_1"
+    t.string   "shipping_address_2"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "shipping_costs", :force => true do |t|

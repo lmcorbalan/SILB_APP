@@ -1,0 +1,87 @@
+<% provide(:title, t('shopping_cart')) %>
+<% provide(:section, t('shopping_cart')) %>
+
+<% if @shopping_cart.items.any? %>
+  <% @shopping_cart.items.each do |item| %>
+    <div class="media">
+      <a class="pull-left" href="#">
+        <%= image_tag(item.product.pictures.first.image_url(:thumb), :class => "media-object") %>
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <%= item.product.code + ' | ' +  item.product.name %>
+          <%=
+            link_to t('remove'), line_item_path(item),
+              confirm: t('are_you_sure_you_want_to_remove_this_item_from_cart?', code: item.product.code),
+              method: :delete, :class => "btn btn-small btn-danger pull-right"
+          %>
+        </h4>
+        <%= form_for item, html: { class: "form-horizontal cart-item" } do |f| %>
+          <div class="control-group">
+            <label class="control-label" style="text-align:left;">
+              <%= t('activerecord.attributes.product.price_cents') %>
+            </label>
+            <div class="controls">
+              <label style="text-align:left;">
+                <%= humanized_money_with_symbol(item.product.price) %>
+              </label>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :quantity, class: "control-label", style: "text-align:left;" %>
+            <div class="controls">
+              <% if item.product.in_stock? %>
+                <%= f.select(
+                  :quantity,
+                  ( (1..item.product.current_stock).map {|i| [i,i] } ),
+                  {},
+                  { class: "span1 line-quantity", id: "quantity-#{item.id}"}
+                ) %>
+                <span class="badge" id="<%= "badge-quantity-#{item.id}" %>" style="display:none;">
+                  <i class='icon-spin icon-refresh icon-large icon-white'></i>
+                </span>
+              <% else %>
+                <%= content_tag( :span, t('sorry_product_out_of_stock'), class: 'out-stock' ) %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <hr class="bs-docs-separator">
+  <% end %>
+  <div class="row">
+    <div id="cart-sub-total" class="span6">
+      <%= content_tag( :p, t('sub_total') + ': ' + humanized_money_with_symbol(@shopping_cart.sub_total) ) %>
+    </div>
+    <div class="span6">
+      <%= link_to t('checkout'), checkout_path, :class => "btn btn-large btn-success pull-right" %>
+    </div>
+  </div>
+<% else %>
+  <%= content_tag( :div, class: "alert text-center" ) do %>
+    <%= content_tag( :span, t('empty_shopping_cart') ) %>
+  <% end %>
+<% end %>
+
+<script type="text/javascript">
+$(function () {
+    $('select.line-quantity').live("change", function () {
+        var select = $(this)
+        var badge = $('#badge-'+this.id);
+        badge.show();
+
+        var form = $(this).parents('form:first')[0];
+        var data = $(form).serialize()
+        $(this).prop('disabled', true);
+
+        var posting = $.post(form.action, data, null, "script");
+
+        posting.done(function( data ) {
+          badge.hide();
+          select.prop('disabled', false);
+        });
+        return false;
+    });
+});
+</script>

@@ -15,4 +15,25 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail :to => "#{user.name} <#{user.email}>", :subject => t('welcome_silb')
   end
+
+  def order_purchased(user, order)
+    @user  = user
+    @order = order
+
+    mail :to => "#{user.name} <#{user.email}>", :subject => t( 'user_mailer.order_purchased.subject', id: @order.id )
+  end
+
+  def admin_order_purchased(user, order)
+    @user  = user
+    @order = order
+
+    mail :to => "#{user.name} <#{user.email}>", :subject => t( 'user_mailer.admin_order_purchased.subject', id: @order.id )
+  end
+
+  def admin_order_purchased_error(user, order)
+    @user  = user
+    @order = order
+
+    mail :to => "#{user.name} <#{user.email}>", :subject => t( 'user_mailer.admin_order_purchased_error.subject', id: @order.id )
+  end
 end

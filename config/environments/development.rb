@@ -36,4 +36,16 @@ SILBApp::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { :host => "localhost:3000" }
+
+  config.after_initialize do
+    ActiveMerchant::Billing::Base.mode = :test
+    # pasar a variables de entorno
+    paypal_options = {
+      :login => ENV['EXPRESS_GATEWAY_LOGIN'],
+      :password => ENV['EXPRESS_GATEWAY_PASSWD'],
+      :signature => ENV['EXPRESS_GATEWAY_SIGNATURE']
+    }
+    ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(paypal_options)
+  end
+
 end

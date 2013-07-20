@@ -1,0 +1,101 @@
+<% provide(:title, t('payment_confirmation')) %>
+<% provide(:section, t('payment_confirmation')) %>
+
+  <%= form_for @order_payment do |f| %>
+    <%= f.hidden_field :express_token %>
+<div class="row">
+  <div class="span9 offset2">
+    <div class="row">
+      <div class="span4">
+        <p><strong><u><%= t('billing') %></u></strong></p>
+        <dl class="dl-horizontal">
+          <dt style="text-align:left;"><%= t('billing_name') + ':' %></dt>
+          <dd><%= h(@order_payment.last_name) + ', ' %><%= h(@order_payment.first_name) %></dd>
+        </dl>
+      </div>
+      <div class="span4">
+        <p><strong><u><%= t('shipping') %></u></strong></p>
+        <dl class="dl-horizontal">
+          <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.reference_name') + ':' %></dt>
+          <dd><%= h(@shopping_cart.shipping_address.reference_name) %></dd>
+
+          <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.reference_last_name') + ':' %></dt>
+          <dd><%= h(@shopping_cart.shipping_address.reference_last_name) %></dd>
+
+          <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.company_name') + ':' %></dt>
+          <dd><%= h(@shopping_cart.shipping_address.company_name) %></dd>
+
+          <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.reference_phone') + ':' %></dt>
+          <dd><%= h(@shopping_cart.shipping_address.reference_phone) %></dd>
+
+          <dt style="text-align:left;"><%= t('region') + ':' %></dt>
+          <dd><%= h(@shopping_cart.shipping_cost.city.region.name) %></dd>
+
+          <dt style="text-align:left;"><%= t('city') + ':' %></dt>
+          <dd><%= h(@shopping_cart.shipping_cost.city.name) %></dd>
+
+          <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.zip_code') + ':' %></dt>
+          <dd><%= h(@shopping_cart.shipping_address.zip_code) %></dd>
+
+          <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.shipping_address_1') + ':' %></dt>
+          <dd><%= h(@shopping_cart.shipping_address.shipping_address_1) %></dd>
+
+          <dt style="text-align:left;"><%= t('activerecord.attributes.shipping_address.shipping_address_2') + ':' %></dt>
+          <dd><%= h(@shopping_cart.shipping_address.shipping_address_2) %></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span9">
+        <p><strong><u><%= t('order_detail') %></u></strong></p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th><%= t('activerecord.attributes.line_item.quantity') %></th>
+              <th><%= t('activerecord.attributes.product.code') %></th>
+              <th><%= t('activerecord.attributes.product.name') %></th>
+              <th><%= t('activerecord.attributes.line_item.unit_price_cent') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @shopping_cart.items.each do |item| %>
+              <tr>
+                <td><%= h(item.quantity.to_s) %></td>
+                <td><%= h(item.product.code) %></td>
+                <td><%= h(item.product.name) %></td>
+                <td><%= humanized_money_with_symbol(item.amount) %></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td>--</td>
+              <td>--</td>
+              <td><%= t('shipping_cost')  %></td>
+              <td><%= humanized_money_with_symbol(@shopping_cart.shipping_cost.price) %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span4 offset5">
+        <p><strong><u><%= t('total') %></u></strong></p>
+        <dl class="dl-horizontal">
+          <dt style="text-align:left;"><%= t('ar_total')  %></dt>
+          <dd><%= humanized_money_with_symbol(@shopping_cart.total) %></dd>
+          <dt style="text-align:left;"><%= t('usd_total')  %></dt>
+          <dd><%= humanized_money_with_symbol(@order_payment.usd_amount) %></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span3">
+        <%= link_to t('cancel'), paypal_cancel_path, class: "btn btn-danger" %>
+      </div>
+      <div class="span3 offset3">
+        <%= f.submit t('confirm_payment'), class: "btn btn-success pull-right" %>
+      </div>
+    </div>
+  </div>
+
+</div>
+<% end %>

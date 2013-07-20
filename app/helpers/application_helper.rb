@@ -32,12 +32,12 @@ module ApplicationHelper
     categories.map do |category, sub_categories|
       if !sub_categories.blank?
         content_tag(:li,
-          link_to( category.name.titleize(), catalogs_path( category: category.id) ) +
+          link_to( category.name.titleize(), catalog_path( category: category.id) ) +
           content_tag(:ul, nested_menu(sub_categories),:class => "dropdown-menu"),
           :class => "dropdown-submenu"
         )
       else
-        content_tag(:li, link_to( category.name.titleize, catalogs_path( category: category.id) ) )
+        content_tag(:li, link_to( category.name.titleize, catalog_path( category: category.id) ) )
       end
     end.join.html_safe
   end

@@ -53,4 +53,20 @@ module SessionsHelper
   def admin_user?
     current_user && current_user.admin?
   end
+
+  def customer
+    if !signed_in?
+      redirect_to signin_url, notice: t('please_sign_in')
+    elsif admin_user?
+      redirect_to root_path, notice: t('not_allowed_action')
+    end
+  end
+
+  def customer?
+    current_user && !current_user.admin?
+  end
+
+  def shopping_cart
+    @shopping_cart ||= current_user.get_shopping_cart
+  end
 end

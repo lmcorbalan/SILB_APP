@@ -20,12 +20,14 @@
       <div class="article-footer">
         <div class="price-small">
           <i class="icon-tag"> </i> <span class="amount"><%= humanized_money_with_symbol @product.price %></span>
-          <div class="pull-right">
-            <%= link_to('#', :class => "btn btn-success") do %>
-              <%= content_tag(:i, nil, :class => "icon-shopping-cart icon-white" ) %>
-              <%= ' ' + t('add_to_cart')  %>
-            <% end %>
-          </div>
+          <% if signed_in? && !admin_user? %>
+            <div class="pull-right">
+              <%= link_to(line_items_path(:id => @product.id), method: "post", :class => "btn btn-success") do %>
+                <%= content_tag(:i, nil, :class => "icon-shopping-cart icon-white" ) %>
+                <%= ' ' + t('add_to_cart')  %>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

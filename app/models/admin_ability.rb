@@ -30,4 +30,9 @@ class AdminAbility
     # manager
     can :manage, [City, Region, ShippingMethod, ShippingCost]
   end
+
+  def orders_admin
+    # manager
+    # can :manage, [City, Region, ShippingMethod, ShippingCost]
+  end
 end

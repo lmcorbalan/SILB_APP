@@ -2,6 +2,17 @@
   <div class="navbar-inner">
     <div class="container">
       <%= link_to "SILB", '#', id: "logo" %>
+      <% if customer? && shopping_cart %>
+        <div class="pull-right cart-box">
+          <i class="icon-shopping-cart icon-white pull-left"></i>
+          <span class="badge badge-info" id="header-cart-box">
+            <%=
+              link_to( t('shopping_cart_summary', count: @shopping_cart.items.count) + ' - ' +
+                humanized_money_with_symbol(@shopping_cart.sub_total), shopping_cart_path )
+            %>
+          </span>
+        </div>
+      <% end %>
       <nav>
         <ul class="nav">
           <li><%= link_to t('home'),          root_path %></li>
@@ -11,7 +22,7 @@
               <%= t('products') %> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><%= link_to t('all'), catalogs_path %></li>
+              <li><%= link_to t('all'), catalog_path %></li>
               <%= nested_menu Category.actives.arrange(:order => :name) %>
             </ul>
           </li>
@@ -31,6 +42,11 @@
                 <% if admin_user? %>
                   <li>
                     <%= link_to t('administration'), admin_path %>
+                  </li>
+                  <li class="divider"></li>
+                <% else %>
+                  <li>
+                    <%= link_to t('my_orders'), orders_path %>
                   </li>
                   <li class="divider"></li>
                 <% end %>

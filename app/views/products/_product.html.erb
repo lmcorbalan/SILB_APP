@@ -10,19 +10,21 @@
     <div class="text-box">
       <div style="height:4em;overflow:hidden">
         <h3>
-          <%= link_to product.code + ' | '+ product.name, catalog_path(product) %>
+          <%= link_to product.code + ' | '+ product.name, product_path(product) %>
         </h3>
       </div>
       <%= content_tag( :pre, product.description, :style => "max-height: 6em;" ) %>
       <div class="article-footer">
         <div class="price-small">
           <i class="icon-tag"> </i> <span class="amount"><%= humanized_money_with_symbol product.price %></span>
-          <div class="pull-right">
-            <%= link_to('#', :class => "btn btn-small btn-success") do %>
-              <%= content_tag(:i, nil, :class => "icon-shopping-cart icon-white" ) %>
-              <%= ' ' + t('add_to_cart')  %>
-            <% end %>
-          </div>
+          <% if signed_in? && !admin_user? %>
+            <div class="pull-right">
+              <%= link_to(line_items_path(:id => product.id), method: "post", :class => "btn btn-small btn-success") do %>
+                <%= content_tag(:i, nil, :class => "icon-shopping-cart icon-white" ) %>
+                <%= ' ' + t('add_to_cart')  %>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

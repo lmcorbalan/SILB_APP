@@ -74,6 +74,15 @@ class Product < ActiveRecord::Base
     read_attribute(:name).try(:titleize)
   end
 
+  def in_stock?
+    current_stock > 0
+  end
+
+  def remove_stock(quantity)
+    self.current_stock = self.current_stock - quantity
+    save!
+  end
+
   def self.search(search, order)
     string_or_where = []
     string_where    = []
@@ -155,6 +164,8 @@ class Product < ActiveRecord::Base
     str_w = string_or_where.join(" OR ") if !string_or_where.blank?
     str_w = !str_w.blank? && !string_where.blank? ? [str_w, string_where].join(" AND ") :
       str_w.blank? ? string_where : str_w
+
+    str_w = !str_w.blank? ? ["(#{str_w})", "state = 'active'"].join(" AND ") : "state = 'active'"
 
     where( str_w, bind ).order( order_by )
 
