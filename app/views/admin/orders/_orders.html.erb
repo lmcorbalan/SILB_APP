@@ -1,0 +1,38 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<% if params.has_key?(:customer_id) %>
+  <%= hidden_field_tag :customer_id, params[:customer_id] %>
+<% end %>
+
+<% if @orders.any? %>
+  <table class="table table-condensed" style="table-layout:fixed">
+    <thead>
+      <tr>
+        <th style="width:5%">
+          <%= sortable "id" %>
+        </th>
+        <th style="width:25%">
+          <%= sortable "email", User.human_attribute_name("email") %>
+        </th>
+        <th style="width:20%">
+          <%= sortable "state", Order.human_attribute_name("state") %>
+        </th>
+        <th style="width:15%">
+          <%= sortable "purchased_at", Order.human_attribute_name("purchased_at") %>
+        </th>
+        <th style="width:15%">
+          <%= sortable "updated_at", Order.human_attribute_name("updated_at") %>
+        </th>
+        <th style="width:20%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @orders %>
+    </tbody>
+  </table>
+  <%= will_paginate @orders, class: 'pagination pagination-centered' %>
+<% else %>
+  <%= content_tag( :div, class: "alert text-center" ) do %>
+    <%= content_tag( :span, t('items_not_found') ) %>
+  <% end %>
+<% end %>

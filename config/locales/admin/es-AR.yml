@@ -35,8 +35,16 @@
   product: "Producto"
   new_product: "Nuevo Producto"
   products_list: "Listar Productos"
+  orders_list: "Listar Pedidos"
+  customers_list: "Listar Clientes"
+  customer_orders: "Pedidos de %{name}"
   new_picture: "Nueva Imagen"
   search: "Buscar"
+  print_purchase_order: "Imprimir Orden de Pedido (PDF)"
+  next_state: "Proximo Estado"
+  next_state_confirm_messg: "Esta seguro que quiere cambiar el estado del pedido a %{state}?"
+  date_to: "Fecha desde"
+  date_from: "Fecha hasta"
   an_error_occurred_the_action_could_not_be_completed: "Ha ocurrido un error, la acción no pudo concretarse. Por favor intente nuevamente mas tarde."
   region_successfully_created: "La región se ha creado correctamente"
   region_successfully_updated: "La región se ha actualizado correctamente"
@@ -70,4 +78,10 @@
   file_is_too_small: 'El tamaño del archivo es muy pequeño'
   filetype_not_allowed: 'Tipo de archivo no permitido'
   max_number_of_files_exceeded: 'Cantidad maxima de archivos exedida'
+  order_state_successfully_updated: 'Se ha cambiado el estado del pedido exitosamente'
+  error_order_state_successfully_updated: 'Ha ocurrido un error al intentar cambiar el estado del pedido'
+  sales_report: "Reporte de Ventas"
+  sales_quantity: "Cantidad de Ventas"
+  total_sales: "Total en Ventas"
+  average_selling: "Venta Promedio"
 

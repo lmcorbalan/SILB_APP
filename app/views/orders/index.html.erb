@@ -1,7 +1,13 @@
 <% provide(:title, t('orders')) %>
 <% provide(:section, t('my_orders')) %>
 
-<ul class="media-list">
-    <%= render @orders %>
-</ul>
+<% if @orders.count > 1 || @orders.first.purchased? %>
+  <ul class="media-list">
+      <%= render @orders %>
+  </ul>
+<% else %>
+  <%= content_tag( :div, class: "alert text-center" ) do %>
+    <%= content_tag( :span, t('do_not_yet_placed_orders') ) %>
+  <% end %>
+<% end %>
 

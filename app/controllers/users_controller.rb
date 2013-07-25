@@ -1,11 +1,8 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy, :following, :followers]
+                only: [:index, :edit, :update, :destroy]
   before_filter :correct_user,   only: [:edit, :update]
-  # before_filter :admin_user,     only: :destroy
 
-  #mios
-  # before_filter :himself,        only: :destroy
   before_filter :is_signed,      only: [:new, :create]
 
   def show
@@ -28,11 +25,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # @user = User.find(params[:id]) --> se comenta porque @user pasa a ser creado en correct_user, llamado en el before_filtes
   end
 
   def update
-    # @user = User.find(params[:id]) --> se comenta porque @user pasa a ser creado en correct_user, llamado en el before_filtes
     if @user.update_attributes(params[:user])
       flash[:success] = t('profile_updated_successfully_message')
       sign_in @user
@@ -41,12 +36,6 @@ class UsersController < ApplicationController
       render 'edit'
     end
   end
-
-  # def destroy
-  #   User.find(params[:id]).destroy
-  #   flash[:success] = "User destroyed."
-  #   redirect_to users_url
-  # end
 
   private
 

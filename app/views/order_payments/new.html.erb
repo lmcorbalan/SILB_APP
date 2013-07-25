@@ -1,8 +1,8 @@
 <% provide(:title, t('payment_confirmation')) %>
 <% provide(:section, t('payment_confirmation')) %>
 
-  <%= form_for @order_payment do |f| %>
-    <%= f.hidden_field :express_token %>
+<%= form_for @order_payment do |f| %>
+<%= f.hidden_field :express_token %>
 <div class="row">
   <div class="span9 offset2">
     <div class="row">
@@ -63,7 +63,7 @@
                 <td><%= h(item.quantity.to_s) %></td>
                 <td><%= h(item.product.code) %></td>
                 <td><%= h(item.product.name) %></td>
-                <td><%= humanized_money_with_symbol(item.amount) %></td>
+                <td><%= humanized_money_with_symbol(item.product.price) %></td>
               </tr>
             <% end %>
             <tr>

@@ -1,0 +1,135 @@
+<% provide(:title, t('order')) %>
+<% provide(:section, "#{t('order')} \##{@order.id} :: #{@order.human_state_name}") %>
+
+<div class="row">
+  <div class="span9 offset1">
+    <div class="row">
+      <div class="span3">
+        <% if @order.purchased? %>
+          <%= link_to t('print_purchase_order'),
+                admin_order_path(@order, format: "pdf"), :target => "_blank"
+          %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+          <div class="media-body">
+            <dl class="dl-horizontal">
+            <dt style="text-align:left;"><%= Order.human_attribute_name("purchased_at") + ':' %></dt>
+            <dd><%= l(@order.purchased_at, format: :short) %></dd>
+
+            <dt style="text-align:left;"><%= Order.human_attribute_name("updated_at") + ':' %></dt>
+            <dd><%= l(@order.updated_at, format: :short) %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+  <% if @order.purchased? %>
+    <div class="row">
+      <div class="span4">
+        <p><strong><u><%= t('billing') %></u></strong></p>
+        <dl class="dl-horizontal">
+          <dt style="text-align:left;"><%= t('billing_name') + ':' %></dt>
+          <dd><%= h(@order.payment.last_name) + ', ' %><%= h(@order.payment.first_name) %></dd>
+        </dl>
+      </div>
+      <div class="span4">
+        <p><strong><u><%= t('shipping') %></u></strong></p>
+        <dl class="dl-horizontal">
+          <dt style="text-align:left;"><%= ShippingAddress.human_attribute_name("reference_name")  + ':' %></dt>
+          <dd><%= h(@order.shipping_address.reference_name) %></dd>
+
+          <dt style="text-align:left;"><%= ShippingAddress.human_attribute_name("reference_last_name") + ':' %></dt>
+          <dd><%= h(@order.shipping_address.reference_last_name) %></dd>
+
+          <dt style="text-align:left;"><%= ShippingAddress.human_attribute_name("company_name") + ':' %></dt>
+          <dd><%= h(@order.shipping_address.company_name) %></dd>
+
+          <dt style="text-align:left;"><%= ShippingAddress.human_attribute_name("reference_phone") + ':' %></dt>
+          <dd><%= h(@order.shipping_address.reference_phone) %></dd>
+
+          <dt style="text-align:left;"><%= t('region') + ':' %></dt>
+          <dd><%= h(@order.shipping_cost.city.region.name) %></dd>
+
+          <dt style="text-align:left;"><%= t('city') + ':' %></dt>
+          <dd><%= h(@order.shipping_cost.city.name) %></dd>
+
+          <dt style="text-align:left;"><%= ShippingAddress.human_attribute_name("zip_code") + ':' %></dt>
+          <dd><%= h(@order.shipping_address.zip_code) %></dd>
+
+          <dt style="text-align:left;"><%= ShippingAddress.human_attribute_name("shipping_address_1") + ':' %></dt>
+          <dd><%= h(@order.shipping_address.shipping_address_1) %></dd>
+
+          <dt style="text-align:left;"><%= ShippingAddress.human_attribute_name("shipping_address_2") + ':' %></dt>
+          <dd><%= h(@order.shipping_address.shipping_address_2) %></dd>
+        </dl>
+      </div>
+    </div>
+  <% end %>
+    <div class="row">
+      <div class="span9">
+        <p><strong><u><%= t('order_detail') %></u></strong></p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th><%= LineItem.human_attribute_name("quantity") %></th>
+              <th><%= Product.human_attribute_name("code") %></th>
+              <th><%= Product.human_attribute_name("name") %></th>
+              <th><%= LineItem.human_attribute_name("unit_price_cent") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @order.items.each do |item| %>
+              <tr>
+                <td><%= h(item.quantity.to_s) %></td>
+                <td><%= h(item.product.code) %></td>
+                <td><%= h(item.product.name) %></td>
+                <td><%= humanized_money_with_symbol(@order.purchased? ? item.unit_price : item.product.price) %></td>
+              </tr>
+            <% end %>
+            <% if @order.purchased? %>
+              <tr>
+                <td>--</td>
+                <td>--</td>
+                <td><%= t('shipping_cost')  %></td>
+                <td><%= humanized_money_with_symbol(@order.shipping_cost.price) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span4 offset5">
+        <p><strong><u><%= t('total') %></u></strong></p>
+        <dl class="dl-horizontal">
+          <dt style="text-align:left;"><%= t('ar_total')  %></dt>
+          <dd><%= humanized_money_with_symbol(@order.total) %></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span3">
+        <% if !@order.committed? %>
+          <%= form_for [:admin, @order] do |f| %>
+            <%= f.submit t('next_state'), class: "btn btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function () {
+
+    $("<%= "#edit_order_#{@order.id}" %>").submit(function () {
+        return confirm("<%= t('next_state_confirm_messg', :state => Order.human_state_name(@order.state_paths[0][0].to_name)) %>");
+    });
+
+  })
+
+</script>
+

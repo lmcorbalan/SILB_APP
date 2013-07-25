@@ -42,7 +42,7 @@
   update: "Actualizar"
   email_sent_with_password_reset_instructions: "Te hemos enviado un email con instrucciones."
   change_password: "Cambiar contraseña"
-  password_rest: "Restablecimiento de contraseña"
+  password_reset: "Restablecimiento de contraseña"
   password_reset_has_expired: "El tiempo para el restablecimiento de la contraseña ha expirado"
   password_has_been_reset!: "La contraseña ha sido restablecida!"
   to_reset_your_password_click_the_URL_below: "Para restablecer la contraseña, haga clic en el enlace de abajo."
@@ -63,6 +63,7 @@
   our_products: 'Nuestros Productos'
   shopping_cart: 'Pedido Actual'
   empty_shopping_cart: 'No se han cargado productos en su pedido actual'
+  do_not_yet_placed_orders: "Todavía no has hecho un pedido!!"
   are_you_sure_you_want_to_remove_this_item_from_cart?: 'Esta seguro que desea quitar el item %{code} de su pedido actual?'
   product_successfully_added: 'Se ha agregado un nuevo item a su pedido actual'
   an_error_occurred_while_trying_to_add_the_product: 'Ha ocurrido un error al intetar agregar el item a su pedido actual. Por favor intentalo nuevamente.'

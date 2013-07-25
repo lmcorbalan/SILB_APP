@@ -40,32 +40,38 @@ class OrderPayment < ActiveRecord::Base
   end
 
   include Rails.application.routes.url_helpers
-  def options_for_paypal
+  def setup_for_paypal
     # paypal do not accept shippings from USA to Argentina
     # :shipping_address  => order.shipping_address.detail_for_paypal,
     # :address_override  => true,
+    order_detail = order.detail_for_paypal
+
     {
-      :no_shipping => true,
-      :email       => order.user.email,
-      :items       => order.detail_for_paypal
+      :amount  => order_detail[:amount],
+      :options => {
+        :no_shipping => true,
+        :email       => order.user.email,
+        :items       => order_detail[:items]
+      }
     }
   end
 
   private
     def process_purchase
       if !express_token.blank?
-        EXPRESS_GATEWAY.purchase(usd_amount.cents, express_purchase_options)
+        purchase_opt = express_purchase_options
+        EXPRESS_GATEWAY.purchase(purchase_opt[:amount], purchase_opt[:options])
       end
     end
 
     def express_purchase_options
-      purchase_options = options_for_paypal
+      purchase_opt = setup_for_paypal
 
-      purchase_options[:id]       = ip_address
-      purchase_options[:token]    = express_token
-      purchase_options[:payer_id] = express_payer_id
+      purchase_opt[:options][:id]       = ip_address
+      purchase_opt[:options][:token]    = express_token
+      purchase_opt[:options][:payer_id] = express_payer_id
 
-      return purchase_options
+      return purchase_opt
     end
 
 end

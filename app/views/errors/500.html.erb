@@ -1,0 +1,8 @@
+<% provide(:title, t('error_500.title')) %>
+<div class="alert alert-error alert-block">
+  <h4><%= t('error_500.title') %></h4>
+  <p><%= t('error_500.content') %></p>
+  <% if @exception %>
+    <p><%= @exception.message %></p>
+  <% end %>
+</div>

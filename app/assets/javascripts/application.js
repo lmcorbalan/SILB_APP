@@ -12,7 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.datepicker
+//= require jquery.ui.datepicker-es
 //= require bootstrap
 //= require rails.validations
 //= require jquery-fileupload
+//= require raphael
+//= require morris
 //= require_tree .

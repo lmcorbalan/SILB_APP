@@ -60,23 +60,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.search_admins(params)
-    if params
-      binds = {}
-
-      string_where = ['admin = :admin']
-      binds[:admin] = true;
-
-      string_where << '(name LIKE :name OR email LIKE :email)' if params[:search].present?
-      binds[:name ] = "%#{params[:search]}%"
-      binds[:email] = "%#{params[:search]}%"
-
-      where(string_where.join(" AND "), binds)
-    else
-      scoped
-    end
-  end
-
   def roles=(roles)
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
   end
@@ -98,6 +81,41 @@ class User < ActiveRecord::Base
   def get_shopping_cart
     cart = shopping_cart
     cart.nil? ? orders.create : cart
+  end
+
+  def self.search(params)
+    if params
+      binds        = {}
+      string_where = []
+
+      if params.has_key?(:admin)
+        if params[:admin]
+          string_where  = ['admin = :admin']
+          binds[:admin] = true;
+        else
+          string_where  = ['admin IS :admin']
+          binds[:admin] = nil;
+        end
+      end
+
+      string_where << '(name LIKE :name OR email LIKE :email)' if params[:search].present?
+      binds[:name ] = "%#{params[:search]}%"
+      binds[:email] = "%#{params[:search]}%"
+
+      where(string_where.join(" AND "), binds)
+    else
+      scoped
+    end
+  end
+
+  def self.search_admins(params={})
+    params[:admin] = true
+    self.search(params)
+  end
+
+  def self.search_customers(params={})
+    params[:admin] = nil
+    self.search(params)
   end
 
 private

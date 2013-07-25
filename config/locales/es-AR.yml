@@ -118,7 +118,7 @@
               successful_purchase: "Comprado Exitosamente"
               unsuccessful_purchase: "Error en la compra"
               dispatched: "Despachado"
-              dispatched: "Entregado"
+              committed: "Entregado"
     errors:
       models:
         shipping_cost:
@@ -164,3 +164,12 @@
     admin_order_purchased_error:
       subject: Venta CON ERROR - Orden %{id}
       body: 'Ocurrio un error al intentar realizar una venta.'
+  error_404:
+    title: 'La página que estás buscando no existe (404)'
+    content: 'Es posible que haya escrito mal la dirección o la página puede haber cambiado.'
+  error_422:
+    title: 'El cambio que quería fue rechazada (422)'
+    content: 'Tal vez trató de cambiar algo que no tiene acceso.'
+  error_500:
+    title: 'Lo sentimos, ha ocurrido un error (500)'
+    content: 'Algo muy malo debe haber pasado.'

@@ -1,5 +1,9 @@
 SILBApp::Application.routes.draw do
 
+  get "errors/show"
+
+  get "customers/index"
+
   root to: 'static_pages#home'
 
   resources :users,            only: [:new, :create, :edit, :update]
@@ -32,13 +36,13 @@ SILBApp::Application.routes.draw do
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
 
-    resources :users,            only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :users,                  only: [:index, :new, :create, :edit, :update, :destroy]
 
-    resources :regions,          only: [:index, :new, :create, :edit, :update]
-    resources :region_states,    only: [:update]
+    resources :regions,                only: [:index, :new, :create, :edit, :update]
+    resources :region_states,          only: [:update]
 
-    resources :cities,           only: [:index, :new, :create, :edit, :update]
-    resources :city_states,      only: [:update]
+    resources :cities,                 only: [:index, :new, :create, :edit, :update]
+    resources :city_states,            only: [:update]
 
     resources :shipping_methods,       only: [:index, :new, :create, :edit, :update]
     resources :shipping_method_states, only: [:update]
@@ -46,16 +50,26 @@ SILBApp::Application.routes.draw do
     resources :shipping_costs,         only: [:index, :new, :create, :edit, :update]
     resources :shipping_cost_states,   only: [:update]
 
-    resources :categories,       only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :categories,             only: [:index, :new, :create, :edit, :update, :destroy]
 
-    resources :brands,        only: [:index, :new, :create, :edit, :update]
-    resources :brand_states,  only: [:update]
+    resources :brands,                 only: [:index, :new, :create, :edit, :update]
+    resources :brand_states,           only: [:update]
 
-    resources :products,        only: [:index, :show, :new, :create, :edit, :update]
-    resources :product_states,  only: [:update]
+    resources :products,               only: [:index, :show, :new, :create, :edit, :update]
+    resources :product_states,         only: [:update]
 
-    resources :pictures,        only: [:index, :create, :destroy]
+    resources :pictures,               only: [:index, :create, :destroy]
+
+    resources :orders,                 only: [:index, :show, :update]
+
+    resources :customers,              only: [:index]
+
+    # get '/sales_report', to: 'reports#sales_report'
+    match '/sales_report', to: 'reports#sales_report', via: [:post, :get]
 
   end
+
+  match 'errors/:status', to: 'errors#show', constraints: {status: /\d{3}/} #,  via: :all
+  match '/:status', to: 'errors#show', constraints: {status: /\d{3}/} #,  via: :all
 
 end

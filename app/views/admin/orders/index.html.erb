@@ -1,0 +1,74 @@
+<% provide(:title, t('orders')) %>
+<% if !params.has_key?(:customer_id) %>
+  <% provide(:section, t('orders')) %>
+<% else %>
+  <% provide(:section, t('customer_orders', name: @orders.first.user.name)) %>
+<% end %>
+
+<%= form_tag admin_orders_path, method: 'get', id: "orders_search" do %>
+  <div class="search">
+    <div class="row">
+      <% if !params.has_key?(:customer_id) %>
+        <div class="span2">
+          <%= label_tag :id, Order.human_attribute_name("id") %>
+          <%= text_field_tag :id, params[:id] %>
+        </div>
+      <% end %>
+        <div class="span3">
+          <%= label_tag :state, Order.human_attribute_name("state") %>
+          <%= select(nil, :state, @states, { :include_blank => true }) %>
+        </div>
+      <% if !params.has_key?(:customer_id) %>
+        <div class="span5">
+          <%= label_tag :email, User.human_attribute_name("email") %>
+          <%= text_field_tag :email, params[:email] %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="span3">
+        <%= label_tag :date_from, t('date_to') %>
+        <%= text_field_tag :date_from_locale %>
+        <%= hidden_field_tag :date_from %>
+      </div>
+      <div class="span3">
+        <%= label_tag :date_to, t('date_to') %>
+        <%= text_field_tag :date_to_locale %>
+        <%= hidden_field_tag :date_to %>
+      </div>
+    </div>
+
+    <%= submit_tag t('search'), class: 'btn' %>
+  </div>
+  <div id="orders"><%= render 'orders' %></div>
+<% end %>
+
+<script type="text/javascript">
+  $(function () {
+    $('#orders th a, #orders .pagination a').live("click", function () {
+        $.getScript(this.href);
+        return false;
+    });
+
+    $('#orders_search').submit(function () {
+        $.get(this.action, $(this).serialize(), null, "script");
+        return false;
+    });
+
+    var region = "<%= params[:locale] ? params[:locale][0..1] : es %>"
+    $('#date_from_locale').datepicker({
+      altField: '#date_from',
+      altFormat: 'yy-mm-dd 00:00:00',
+      dateFormat: 'dd/mm/yy',
+      setDefault: region
+    });
+
+    $('#date_to_locale').datepicker({
+      altField: '#date_to',
+      altFormat: 'yy-mm-dd 23:59:59',
+      dateFormat: 'dd/mm/yy',
+      setDefault: region
+    });
+
+  })
+</script>

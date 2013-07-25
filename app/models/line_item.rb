@@ -17,7 +17,8 @@ class LineItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :product
 
-  # FIXME - must have an unit_price column, the product price may vary with time
+  monetize :unit_price_cents, :allow_nil => true
+
   def amount
     # can't change the quantity if the order has already been purchased
     if  !order.purchased?
@@ -30,7 +31,7 @@ class LineItem < ActiveRecord::Base
       end
     end
 
-    product.price * quantity
+    !order.purchased? ? product.price * quantity : unit_price * quantity
   end
 
   def sold

@@ -1,0 +1,97 @@
+<% provide(:title, t('sales_report')) %>
+<% provide(:section, t('sales_report')) %>
+
+<%= form_tag admin_sales_report_path do %>
+  <div class="search">
+    <div class="row">
+      <div class="span3">
+        <%= label_tag :date_from, t('date_to') %>
+        <%= text_field_tag :date_from_locale, params[:date_from_locale] %>
+        <%= hidden_field_tag :date_from, params[:date_from] %>
+      </div>
+      <div class="span3">
+        <%= label_tag :date_to, t('date_to') %>
+        <%= text_field_tag :date_to_locale, params[:date_to_locale] %>
+        <%= hidden_field_tag :date_to, params[:date_to] %>
+      </div>
+    </div>
+
+    <%= submit_tag t('search'), class: 'btn' %>
+  </div>
+<% end %>
+  <div class="row overview">
+    <div class="span4">
+      <div class="well">
+        <div class="head text-center"><%= t('sales_quantity') %></div>
+        <p class="text-center"><%= @sales_data[:period_overview][:quantity] %></p>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="well">
+        <div class="head text-center"><%= t('total_sales') %></div>
+        <p class="text-center"><%= humanized_money_with_symbol @sales_data[:period_overview][:total_sales] %></p>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="well">
+        <div class="head text-center"><%= t('average_selling') %></div>
+        <p class="text-center"><%= humanized_money_with_symbol @sales_data[:period_overview][:average_selling] %></p>
+      </div>
+    </div>
+  </div>
+  <%= content_tag :div, "", id: "sales_chart", data: {sales: @sales_data[:total_by_day]} %>
+  <%= content_tag :div, "", id: "top_selling_products", data: {top: @sales_data[:top_selling_products]} %>
+
+<script type="text/javascript">
+  $(function () {
+    var region = "<%= params[:locale] ? params[:locale][0..1] : 'es' %>"
+    $('#date_from_locale').datepicker({
+      altField: '#date_from',
+      altFormat: 'yy-mm-dd',
+      dateFormat: 'dd/mm/yy',
+      setDefault: region
+    });
+
+    $('#date_to_locale').datepicker({
+      altField: '#date_to',
+      altFormat: 'yy-mm-dd',
+      dateFormat: 'dd/mm/yy',
+      setDefault: region
+    });
+
+    Morris.Line({
+      element: 'sales_chart',
+      data: $('#sales_chart').data('sales'),
+      xkey: 'purchased_at',
+      ykeys: ['price'],
+      labels: ["<%= t('total_sales') %>"],
+      preUnits: '$',
+      hideHover: true,
+      xLabels: "day",
+      yLabelFormat: function(label) {
+        return "$" + monyFormat(label);
+      },
+      hoverCallback: function (index, options, content) {
+        content += "<div class='morris-hover-point' style='color:#666'>\n  <%= t('sales_quantity') %> :\n  " + $('#sales_chart').data('sales')[index].quantity + "\n</div>";
+        return content
+      }
+    });
+
+    Morris.Donut({
+      element: 'top_selling_products',
+      data: $('#top_selling_products').data('top')
+    });
+
+    function monyFormat (num) {
+      var absnum, intnum, ret, strabsnum;
+      if (num != null) {
+        strnum = (num/100).toFixed(2);
+        strnum = strnum.replace(/\./g, ',');
+        return strnum;
+      } else {
+        return '-';
+      }
+    }
+
+  })
+ </script>

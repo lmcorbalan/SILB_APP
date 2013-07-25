@@ -18,6 +18,7 @@ gem "ancestry"
 gem "rmagick"
 gem "carrierwave"
 gem "activemerchant"
+gem 'prawn'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
@@ -38,6 +39,7 @@ group :assets do
   gem 'coffee-rails', '3.2.2'
   gem 'uglifier', '1.2.3'
   gem 'jquery-fileupload-rails'
+  gem 'jquery-ui-rails'
 end
 
 group :test do

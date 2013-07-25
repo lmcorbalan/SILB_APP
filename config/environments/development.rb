@@ -39,7 +39,6 @@ SILBApp::Application.configure do
 
   config.after_initialize do
     ActiveMerchant::Billing::Base.mode = :test
-    # pasar a variables de entorno
     paypal_options = {
       :login => ENV['EXPRESS_GATEWAY_LOGIN'],
       :password => ENV['EXPRESS_GATEWAY_PASSWD'],

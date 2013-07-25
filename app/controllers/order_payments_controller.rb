@@ -4,14 +4,20 @@ class OrderPaymentsController < ApplicationController
   before_filter :valid_shopping_cart?
 
   def express
-    order_payment = @shopping_cart.build_payment
-    amount        = order_payment.usd_amount.cents
-    options       = order_payment.options_for_paypal
-    options[:ip]  = request.remote_ip
-    options[:return_url]        = new_order_payment_url
-    options[:cancel_return_url] = paypal_cancel_url
+    order_payment                       = @shopping_cart.build_payment
+    setup                               = order_payment.setup_for_paypal
+    setup[:options][:ip]                = request.remote_ip
+    setup[:options][:return_url]        = new_order_payment_url
+    setup[:options][:cancel_return_url] = paypal_cancel_url
 
-    response = EXPRESS_GATEWAY.setup_purchase( amount, options )
+    logger.debug { "ammount => #{setup[:amount]}" }
+    logger.debug { "options => #{setup[:options]}" }
+
+    response = EXPRESS_GATEWAY.setup_purchase( setup[:amount], setup[:options] )
+
+    logger.debug { "RESPONSE => #{response.token}" }
+    logger.debug { "RESPONSE => #{response.message}" }
+    logger.debug { "RESPONSE => #{response.params}" }
 
     redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
   end

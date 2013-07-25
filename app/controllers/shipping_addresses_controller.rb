@@ -1,6 +1,7 @@
 class ShippingAddressesController < ApplicationController
   before_filter :customer
   before_filter :shopping_cart
+  before_filter :valid_shopping_cart?
 
   def new
     @shipping_address = @shopping_cart.build_shipping_address
@@ -27,5 +28,9 @@ class ShippingAddressesController < ApplicationController
           regions[a.ri]['cities'][a.ci] = a.cn
       end
       return regions.to_json()
+    end
+
+    def valid_shopping_cart?
+      redirect_to shopping_cart_path unless @shopping_cart.items.any?
     end
 end

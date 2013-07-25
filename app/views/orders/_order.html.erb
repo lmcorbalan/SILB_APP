@@ -1,7 +1,6 @@
 <% if order.purchased? %>
   <li class="media">
     <div class="media-body">
-      <%= link_to t('detail'), '#' , :class => 'pull-right' %>
       <h4 class="media-heading"><%= "#{t('activerecord.attributes.order.id')} - #{order.id}" %></h4>
       <dl class="dl-horizontal">
         <dt style="text-align:left;"><%= t('activerecord.attributes.order.purchased_at') + ':' %></dt>
@@ -13,6 +12,59 @@
         <dt style="text-align:left;"><%= t('activerecord.attributes.order.updated_at') + ':' %></dt>
         <dd><%= l(order.updated_at, format: :short) %></dd>
       </dl>
+      <div class="accordion" id="<%= "accordion#{order.id}" %>">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <%= link_to t('order_detail'),"\#detail#{order.id}", :class =>"accordion-toggle", :'data-toggle'=>"collapse", :'data-parent'=>"#accordion#{order.id}" %>
+          </div>
+          <div id="<%= "detail#{order.id}" %>" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <div class="row">
+                <div class="span9 offset1">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th><%= LineItem.human_attribute_name("quantity") %></th>
+                        <th><%= Product.human_attribute_name("code") %></th>
+                        <th><%= Product.human_attribute_name("name") %></th>
+                        <th><%= LineItem.human_attribute_name("unit_price_cent") %></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% order.items.each do |item| %>
+                        <tr>
+                          <td><%= h(item.quantity.to_s) %></td>
+                          <td><%= h(item.product.code) %></td>
+                          <td><%= h(item.product.name) %></td>
+                          <td><%= humanized_money_with_symbol(item.unit_price) %></td>
+                        </tr>
+                      <% end %>
+                      <tr>
+                        <td>--</td>
+                        <td>--</td>
+                        <td><%= t('shipping_cost')  %></td>
+                        <td><%= humanized_money_with_symbol(order.shipping_cost.price) %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span4 offset6">
+                  <p><strong><u><%= t('total') %></u></strong></p>
+                  <dl class="dl-horizontal">
+                    <dt style="text-align:left;"><%= t('ar_total')  %></dt>
+                    <dd><%= humanized_money_with_symbol(order.total) %></dd>
+                    <dt style="text-align:left;"><%= t('usd_total')  %></dt>
+                    <dd><%= humanized_money_with_symbol(order.payment.usd_amount) %></dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </li>
 <% end %>
+

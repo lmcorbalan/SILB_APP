@@ -116,11 +116,11 @@ class Product < ActiveRecord::Base
     joins_on = ''
 
     if order && ( order[:col] == 'brand_id' )
-        order_by = "brands.name" + " " + order[:dir]
-        joins_on = :brand
+      order_by = "brands.name" + " " + order[:dir]
+      joins_on = :brand
     elsif order && ( order[:col] == 'category_id' )
-        order_by = "categories.name" + " " + order[:dir]
-        joins_on = :category
+      order_by = "categories.name" + " " + order[:dir]
+      joins_on = :category
     end
 
     str_w = ""

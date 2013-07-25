@@ -42,6 +42,36 @@ module ApplicationHelper
     end.join.html_safe
   end
 
+  def category_breadcrumbs(category)
+    path = category ? category.path : []
+    content =
+      [content_tag(:li,
+          path.any? ? link_to(t('all'), catalog_path) : t('all'),
+          :class => path.empty? ? "active" : ""
+        )]
+
+    content +=
+      path[0..-2].map do |descendant|
+        content_tag(:li,
+          content_tag(:span, "/", :class => "divider") +
+          link_to( descendant.name.titleize(), catalog_path( category: descendant.id) )
+        )
+      end
+
+    content += path.last ?
+      [content_tag(:li,
+        content_tag(:span, "/", :class => "divider") +
+        path.last.name.titleize(),
+        :class => "active"
+      )] : []
+
+
+    content_tag(:ul,
+      content.join.html_safe,
+      :class => "breadcrumb"
+    )
+  end
+
   def admin_picture_upload(object)
     form_for [:admin, object.pictures.build], :html => { :multipart => true, :id => "fileupload"  } do |f|
       f.hidden_field(:imageable_id, :name => "#{object.class.name.underscore}_id") +
